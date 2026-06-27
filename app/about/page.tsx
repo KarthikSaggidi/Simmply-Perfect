@@ -4,7 +4,7 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/home/Footer";
 import CountUp from "react-countup";
-import { motion } from "framer-motion";
+import { motion, type Transition } from "framer-motion";
 
 import {
   Award,
@@ -21,22 +21,14 @@ import {
 } from "lucide-react";
 
 const smoothFadeUp = {
-
-  initial: { opacity: 0, y: 30 },
-
+  initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-
   viewport: { once: true },
-
   transition: {
-
-    duration: 0.7,
-
-    ease: "easeOut",
-
-  },
-
-};;
+    duration: 0.8,
+    ease: [0.22, 1, 0.36, 1] as const
+  } satisfies Transition,
+};
 
 export default function AboutPage() {
   return (
@@ -56,7 +48,7 @@ export default function AboutPage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
                 className="lg:col-span-7"
               >
                 <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#0A2E6F]/5 border border-[#0A2E6F]/10 text-xs font-bold uppercase tracking-wider text-[#0A2E6F]">
@@ -118,7 +110,7 @@ export default function AboutPage() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.96, x: 30 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
                 className="lg:col-span-5 relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#0A2E6F]/10 to-transparent rounded-[32px] pointer-events-none z-10" />

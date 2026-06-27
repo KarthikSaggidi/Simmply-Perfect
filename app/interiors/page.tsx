@@ -1,34 +1,67 @@
 "use client";
-
-import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/home/Footer";
-import { motion } from "framer-motion";
+import Navbar from "@/components/layout/Navbar";
+import { motion, type Variants } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { ArrowRight, CheckCircle2, Quote, Plus } from "lucide-react";
 
 // --- ANIMATION VARIANTS ---
 const fadeUp = {
+
   initial: { opacity: 0, y: 40 },
+
   whileInView: { opacity: 1, y: 0 },
+
   viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.7, ease: "easeOut" },
+
+  transition: {
+
+    duration: 0.7,
+
+    ease: [0.22, 1, 0.36, 1] as const,
+
+  },
+
 };
 
+import type { Transition } from "framer-motion";
+
 const fadeLeft = {
-  initial: { opacity: 0, x: -40 },
+
+  initial: { opacity: 0, x: -60 },
+
   whileInView: { opacity: 1, x: 0 },
+
   viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.7, ease: "easeOut" },
+
+  transition: {
+
+    duration: 0.7,
+
+    ease: [0.22, 1, 0.36, 1] as const,
+
+  },
+
 };
 
 const fadeRight = {
-  initial: { opacity: 0, x: 40 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.7, ease: "easeOut" },
-};
 
+  initial: { opacity: 0, x: 60 },
+
+  whileInView: { opacity: 1, x: 0 },
+
+  viewport: { once: true, margin: "-100px" },
+
+  transition: {
+
+    duration: 0.7,
+
+    ease: [0.22, 1, 0.36, 1] as const,
+
+  },
+
+};
 // --- ENHANCED DATA FOR CARDS AND POPUPS ---
 const interiorServices = [
   {

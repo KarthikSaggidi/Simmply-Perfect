@@ -29,7 +29,7 @@ export default function RenovationPage() {
   },
   transition: {
     duration: 0.7,
-    ease: "easeOut",
+    ease: [0.42, 0, 0.58, 1] as const,
   },
 };
 

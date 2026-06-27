@@ -8,7 +8,7 @@ export const fadeUp = {
     y: 0,
     transition: {
       duration: 0.7,
-      ease: "easeOut",
+      ease: [0.42, 0, 0.58, 1] as const,
     },
   },
 };
@@ -23,7 +23,7 @@ export const fadeLeft = {
     x: 0,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: [0.42, 0, 0.58, 1] as const,
     },
   },
 };
@@ -38,7 +38,7 @@ export const fadeRight = {
     x: 0,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: [0.42, 0, 0.58, 1] as const,
     },
   },
 };
