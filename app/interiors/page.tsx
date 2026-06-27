@@ -338,7 +338,7 @@ export default function InteriorsPage() {
               <motion.div {...fadeLeft}>
                 
                 <h1 className="mt-8 text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight text-[#071224]">
-                  Spaces Designed
+                  Spaces 
                   <br />
                   Around Your
                   <br />
