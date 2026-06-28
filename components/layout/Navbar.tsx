@@ -6,13 +6,15 @@ import { useEffect, useState } from "react";
 import { X, ArrowRight, BookOpen, Download, CheckCircle2, User, Mail, Phone, DoorOpen, Layout, Construction, Layers, Eye, ArrowLeft, Loader2, Sparkles, FileText, ArrowUpRight, Folder, FolderOpen, ChevronRight, PhoneCall } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const links = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Windows & Doors", href: "/windows-doors" },
-  { label: "Interiors", href: "/interiors" },
-  { label: "Renovation", href: "/renovation" },
-  { label: "Contact", href: "/contact" },
+// Clean unified navigation items matching your requested display order exactly
+const menuItems = [
+  { label: "Home", href: "/", isCatalog: false },
+  { label: "About", href: "/about", isCatalog: false },
+  { label: "Windows & Doors", href: "/windows-doors", isCatalog: false },
+  { label: "Interiors", href: "/interiors", isCatalog: false },
+  { label: "Renovation", href: "/renovation", isCatalog: false },
+  { label: "Catalogs", href: "#", isCatalog: true }, // Placed right here in sequence!
+  { label: "Contact", href: "/contact", isCatalog: false },
 ];
 
 const categoriesData = [
@@ -22,7 +24,6 @@ const categoriesData = [
     desc: "Balcony, staircase, and safety specifications",
     icon: Layers,
     color: "from-blue-500/10 to-cyan-500/10 border-blue-100/60 text-blue-700",
-    iconBg: "bg-blue-600",
     files: [
       { name: "Brass Stair Railing", size: "2.4 MB", url: "/catalogs/Railing/Brass Stair Railing.pdf" },
       { name: "Glass Balcony Railing", size: "3.1 MB", url: "/catalogs/Railing/Glass Balcony Railing.pdf" },
@@ -42,7 +43,6 @@ const categoriesData = [
     desc: "Sliding, folding, and casement structures",
     icon: DoorOpen,
     color: "from-indigo-500/10 to-blue-500/10 border-indigo-100/60 text-indigo-700",
-    iconBg: "bg-indigo-600",
     files: [
       { name: "Casement Doors", size: "3.5 MB", url: "/catalogs/UPVC-doors/Casement Doors.pdf" },
       { name: "Customized Doors", size: "4.8 MB", url: "/catalogs/UPVC-doors/Customized.pdf" },
@@ -58,7 +58,6 @@ const categoriesData = [
     desc: "Fixed, hung, and combination window frames",
     icon: Layout,
     color: "from-purple-500/10 to-indigo-500/10 border-purple-100/60 text-purple-700",
-    iconBg: "bg-purple-600",
     files: [
       { name: "Bay and Bow", size: "2.9 MB", url: "/catalogs/UPVC-windows/Bay and Bow.pdf" },
       { name: "Casement Windows", size: "3.1 MB", url: "/catalogs/UPVC-windows/Casement Windows.pdf" },
@@ -78,7 +77,6 @@ const categoriesData = [
     desc: "Premium natural solid timber frames",
     icon: Construction,
     color: "from-amber-500/10 to-orange-500/10 border-amber-100/60 text-amber-700",
-    iconBg: "bg-amber-600",
     files: [
       { name: "Simmply Perfect Wooden Door", size: "5.8 MB", url: "/catalogs/Wooden-doors/Simmply Perfect Wooden Door.pdf" }
     ]
@@ -89,7 +87,6 @@ const categoriesData = [
     desc: "Waterproof structural luxury frameworks",
     icon: DoorOpen,
     color: "from-teal-500/10 to-emerald-500/10 border-teal-100/60 text-teal-700",
-    iconBg: "bg-teal-600",
     files: [
       { name: "Simmply Perfect WPVC Exterior Designs", size: "6.2 MB", url: "/catalogs/WPVC-doors/Simmply Perfect Exterior Designs.pdf" },
       { name: "Simmply Perfect WPVC Interior Designs", size: "5.9 MB", url: "/catalogs/WPVC-doors/Simmply Perfect Interior Designs.pdf" }
@@ -103,7 +100,7 @@ export default function Navbar() {
   const [catalogsOpen, setCatalogsOpen] = useState(false);
 
   // Gated Form Access Management
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "+91 " });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -128,8 +125,32 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Strict Phone Digit Formatter (+91 Verification)
+  const handlePhoneChange = (val: string) => {
+    if (!val.startsWith("+91 ")) {
+      setFormData(prev => ({ ...prev, phone: "+91 " }));
+      return;
+    }
+    const digits = val.slice(4).replace(/\D/g, "");
+    if (digits.length > 10) return;
+
+    let formatted = "+91 ";
+    if (digits.length > 0) formatted += digits.substring(0, 5);
+    if (digits.length > 5) formatted += " " + digits.substring(5, 10);
+
+    setFormData(prev => ({ ...prev, phone: formatted }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const rawDigits = formData.phone.slice(4).replace(/\s/g, "");
+    const regexValidation = /^[6-9]\d{9}$/;
+
+    if (!regexValidation.test(rawDigits)) {
+      setSubmitError("Please enter a valid 10-digit mobile number following the +91 prefix code.");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError(null);
 
@@ -151,7 +172,7 @@ export default function Navbar() {
       setIsSubmitted(true);
     } catch (error: any) {
       console.error(error);
-      setSubmitError(error.message || "Mailing interface connection timeout.");
+      setSubmitError(error.message || "Connection timeout exception.");
       setIsSubmitted(true); 
     } finally {
       setIsSubmitting(false);
@@ -166,7 +187,7 @@ export default function Navbar() {
       setSubmitError(null);
       setActivePreviewPdf(null);
       setActiveFolderId(null);
-      setFormData({ name: "", email: "", phone: "" });
+      setFormData({ name: "", email: "", phone: "+91 " });
       setFocusedField(null);
     }, 300);
   };
@@ -194,22 +215,33 @@ export default function Navbar() {
               </div>
             </Link>
 
-            {/* Desktop Navbar Menu Actions */}
+            {/* Desktop Navbar Menu Actions - Dynamically Injects trigger button in exact requested array order */}
             <nav className="hidden lg:flex items-center gap-10">
-              {links.map((link) => (
-                <Link key={link.label} href={link.href} className="relative text-[16px] font-medium text-slate-700 hover:text-[#0A2E6F] transition-all duration-300 group">
-                  {link.label}
-                  <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#0A2E6F] transition-all duration-300 group-hover:w-full" />
-                </Link>
-              ))}
-
-              <button onClick={() => setCatalogsOpen(true)} className="relative text-[16px] font-medium text-slate-700 hover:text-[#0A2E6F] transition-all duration-300 group text-left" >
-                Catalogs
-                <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#0A2E6F] transition-all duration-300 group-hover:w-full" />
-              </button>
+              {menuItems.map((item) => 
+                item.isCatalog ? (
+                  <button 
+                    key={item.label}
+                    onClick={() => setCatalogsOpen(true)} 
+                    className="relative text-[16px] font-medium text-slate-700 hover:text-[#0A2E6F] transition-all duration-300 group text-left"
+                  >
+                    {item.label}
+                    <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#0A2E6F] transition-all duration-300 group-hover:w-full" />
+                  </button>
+                ) : (
+                  <Link 
+                    key={item.label}
+                    href={item.href} 
+                    className="relative text-[16px] font-medium text-slate-700 hover:text-[#0A2E6F] transition-all duration-300 group"
+                  >
+                    {item.label}
+                    <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#0A2E6F] transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                )
+              )}
             </nav>
 
-            <Link href="/contact" className="hidden lg:flex items-center justify-center bg-[#0A2E6F] text-white px-7 py-3 rounded-full text-sm font-medium hover:scale-105 hover:shadow-xl transition-all duration-300">
+            {/* Standalone CTA Button side block */}
+            <Link href="/contact" className="hidden lg:flex items-center justify-center bg-[#0A2E6F] text-white px-7 py-3 rounded-full text-sm font-medium hover:scale-105 hover:shadow-xl transition-all duration-300 shrink-0">
               Get In Touch
             </Link>
 
@@ -226,7 +258,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* MOBILE SIDE PANEL COMPONENT */}
+      {/* MOBILE SIDE PANEL DRAWER */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -243,15 +275,28 @@ export default function Navbar() {
                   </motion.button>
                 </div>
 
-                <div className="flex flex-col gap-6">
-                  {links.map((link) => (
-                    <Link key={link.label} href={link.href} onClick={() => setMobileMenuOpen(false)} className="text-2xl font-medium text-slate-700 hover:text-[#0A2E6F] transition-all">
-                      {link.label}
-                    </Link>
-                  ))}
-                  <button onClick={() => { setMobileMenuOpen(false); setCatalogsOpen(true); }} className="text-2xl font-medium text-slate-700 hover:text-[#0A2E6F] text-left transition-all">
-                    Catalogs
-                  </button>
+                {/* Mobile List Navigation matching order logic perfectly */}
+                <div className="flex flex-col gap-5">
+                  {menuItems.map((item) => 
+                    item.isCatalog ? (
+                      <button 
+                        key={item.label}
+                        onClick={() => { setMobileMenuOpen(false); setCatalogsOpen(true); }} 
+                        className="text-xl font-medium text-slate-700 hover:text-[#0A2E6F] text-left transition-all"
+                      >
+                        {item.label}
+                      </button>
+                    ) : (
+                      <Link 
+                        key={item.label}
+                        href={item.href} 
+                        onClick={() => setMobileMenuOpen(false)} 
+                        className="text-xl font-medium text-slate-700 hover:text-[#0A2E6F] transition-all"
+                      >
+                        {item.label}
+                      </Link>
+                    )
+                  )}
                 </div>
               </div>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="mt-8 bg-[#0A2E6F] text-white py-4 rounded-2xl font-semibold text-center hover:shadow-lg transition-all duration-300">
@@ -266,9 +311,8 @@ export default function Navbar() {
       <AnimatePresence>
         {catalogsOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 md:p-8 lg:p-12 overflow-y-auto">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={handleCloseCatalogs} className="fixed inset-0 bg-slate-950/80 backdrop-blur-2xl z-0" />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={handleCloseCatalogs} className="fixed inset-0 bg-slate-955/80 backdrop-blur-2xl z-0 bg-slate-950/80" />
 
-            {/* IMAX Unified Central Core Frame */}
             <motion.div
               initial={{ opacity: 0, scale: 0.98, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -277,11 +321,10 @@ export default function Navbar() {
               className="relative w-full max-w-5xl bg-gradient-to-b from-white to-slate-50 rounded-[2.5rem] sm:rounded-[3.5rem] shadow-[0_35px_120px_-20px_rgba(0,0,0,0.4)] overflow-hidden z-10 flex flex-col h-[85vh] max-h-[780px] border border-slate-200/50"
             >
               
-              {/* SUB-LAYER: FULLSCREEN STUDIO QUALITY PDF EMBED PLAYER */}
+              {/* SUB-LAYER: FULLSCREEN STUDIO QUALITY PDF EMBED PREVIEW SCREEN */}
               <AnimatePresence>
                 {activePreviewPdf && (
                   <motion.div initial={{ opacity: 0, scale: 1.01 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.01 }} transition={{ duration: 0.35 }} className="absolute inset-0 bg-[#0b0f19] z-50 flex flex-col">
-                    {/* Dark Mode Viewer Tool Panel */}
                     <div className="bg-slate-900/95 border-b border-slate-800 backdrop-blur-md text-white p-4 sm:p-5 px-6 flex items-center justify-between shadow-2xl relative z-10 gap-4">
                       <button onClick={() => setActivePreviewPdf(null)} className="group flex items-center gap-2 text-xs uppercase tracking-widest text-slate-400 hover:text-white font-bold transition-colors">
                         <ArrowLeft size={16} className="transform group-hover:-translate-x-1 transition-transform" />
@@ -309,7 +352,7 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
 
-              {/* Top Left Dynamic Back Button (Only visible inside folder sub-levels) */}
+              {/* Dynamic Back to folders action label */}
               <AnimatePresence>
                 {isSubmitted && activeFolderId && (
                   <motion.button 
@@ -318,25 +361,24 @@ export default function Navbar() {
                     exit={{ opacity: 0, x: -10 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setActiveFolderId(null)}
-                    className="absolute top-5 left-5 sm:top-6 sm:left-6 flex items-center gap-2 px-3 py-2 text-xs font-black uppercase tracking-widest text-slate-500 hover:text-[#0A2E6F] bg-slate-100 hover:bg-slate-200 border border-slate-200/40 rounded-full shadow-md transition-all z-30"
+                    className="absolute top-5 left-5 sm:top-6 sm:left-6 flex items-center gap-2 px-3.5 py-2 text-xs font-black uppercase tracking-widest text-slate-500 hover:text-[#0A2E6F] bg-slate-100 hover:bg-slate-200 border border-slate-200/40 rounded-full shadow-md transition-all z-30"
                   >
                     <ArrowLeft size={14} />
-                    <span className="hidden sm:inline">All Folders</span>
+                    <span>All Folders</span>
                   </motion.button>
                 )}
               </AnimatePresence>
 
-              {/* Universal Top Right System Escape button */}
               <motion.button whileTap={{ scale: 0.95 }} onClick={handleCloseCatalogs} className="absolute top-5 right-5 sm:top-6 sm:right-6 w-11 h-11 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center shadow-md border border-slate-200/60 transition-all z-30">
                 <X size={18} />
               </motion.button>
 
-              {/* INTEGRATED SINGLE WORKSPACE CANVAS */}
+              {/* INTEGRATED CONTAINER CANVAS AREA */}
               <div className="flex-1 p-6 sm:p-10 md:p-14 flex flex-col justify-center overflow-y-auto h-full relative">
                 
                 <AnimatePresence mode="wait">
                   {!isSubmitted ? (
-                    /* STEP 1: GLOWING IMMERSIVE ENTRY PORTAL FORM */
+                    /* STEP 1: VALIDATION FORM GATEWAY MODULE */
                     <motion.div key="lead-gate" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.4, ease: "easeOut" }} className="w-full max-w-xl mx-auto space-y-7">
                       <div className="space-y-2 text-center">
                         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#0A2E6F]/5 border border-[#0A2E6F]/10 text-[#0A2E6F] text-[10px] font-black tracking-widest uppercase mb-1">
@@ -368,7 +410,17 @@ export default function Navbar() {
                             <label className="text-[10px] font-black text-slate-700 uppercase tracking-widest block pl-1">Contact Number</label>
                             <div className={`relative rounded-xl bg-slate-50 border transition-all duration-300 shadow-inner ${focusedField === "phone" ? "border-[#0A2E6F] bg-white ring-4 ring-[#0A2E6F]/5" : "border-slate-200"}`}>
                               <span className={`absolute inset-y-0 left-0 pl-4 flex items-center transition-colors duration-300 ${focusedField === "phone" ? "text-[#0A2E6F]" : "text-slate-400"}`}><Phone size={16} /></span>
-                              <input type="tel" required disabled={isSubmitting} onFocus={() => setFocusedField("phone")} onBlur={() => setFocusedField(null)} value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+91 98765 43210" className="w-full pl-11 pr-4 py-3.5 bg-transparent rounded-xl focus:outline-none text-slate-800 text-sm font-semibold" />
+                              <input 
+                                type="tel" 
+                                required 
+                                disabled={isSubmitting} 
+                                onFocus={() => setFocusedField("phone")} 
+                                onBlur={() => setFocusedField(null)} 
+                                value={formData.phone} 
+                                onChange={(e) => handlePhoneChange(e.target.value)} 
+                                placeholder="+91 98765 43210" 
+                                className="w-full pl-11 pr-4 py-3.5 bg-transparent rounded-xl focus:outline-none text-slate-800 text-sm font-semibold" 
+                              />
                             </div>
                           </div>
                         </div>
@@ -385,10 +437,9 @@ export default function Navbar() {
                       </form>
                     </motion.div>
                   ) : (
-                    /* STEP 2: METICULOUS NESTED EXPLORER (FOLDERS RENDERED INITIALLY) */
+                    /* STEP 2: MULTI-FOLDER DIRECTORY SYSTEM (INITIAL STATE = DIRECTORY TILES) */
                     <motion.div key="media-explorer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full h-full flex flex-col justify-between">
                       
-                      {/* Active Dashboard Breadcrumb Ribbon */}
                       <div className="border-b border-slate-100 pb-5 mb-5 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-6 sm:pt-0">
                         <div className="space-y-1">
                           <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#0A2E6F]">
@@ -410,14 +461,13 @@ export default function Navbar() {
                         </div>
                       </div>
 
-                      {/* WORKSPACE DECK */}
+                      {/* SCROLLABLE WORKSPACE CONTAINER */}
                       <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar pr-1 mb-5 relative">
                         <AnimatePresence mode="wait">
                           {!activeFolderId ? (
-                            /* LAYER A: INITIAL VIEW - FOLDERS GRID PANEL ONLY */
+                            /* DIRECTORY PANEL DISPLAY GRID */
                             <motion.div key="folders-grid" initial={{ opacity: 0, scale: 0.99 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.99 }} transition={{ duration: 0.3 }} className="grid sm:grid-cols-2 gap-4">
                               {categoriesData.map((category) => {
-                                const FolderIcon = category.icon;
                                 return (
                                   <button
                                     key={category.id}
@@ -442,9 +492,8 @@ export default function Navbar() {
                               })}
                             </motion.div>
                           ) : (
-                            /* LAYER B: FOLDER DETAILED SUB-FILE VIEWPORT STACK */
+                            /* SUB-ASSET MANIFEST FILE LEVEL LIST */
                             <motion.div key="files-stack" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }} transition={{ duration: 0.3 }} className="space-y-2.5">
-                              {/* Top Close Folder Navigation Header Row */}
                               <div className="flex items-center justify-between pb-2">
                                 <button onClick={() => setActiveFolderId(null)} className="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#0A2E6F] transition-colors group">
                                   <ArrowLeft size={14} className="transform group-hover:-translate-x-0.5 transition-transform" />
@@ -468,7 +517,6 @@ export default function Navbar() {
                                     </div>
                                   </div>
                                   
-                                  {/* Action Utility Buttons */}
                                   <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
                                     <button onClick={() => setActivePreviewPdf({ title: `${file.name}.pdf`, url: file.url })} className="flex items-center gap-1.5 px-3 py-2 text-xs font-extrabold text-slate-700 bg-slate-50 hover:bg-[#0A2E6F] hover:text-white border border-slate-200 hover:border-[#0A2E6F] rounded-xl transition-all shadow-sm">
                                       <Eye size={13} />
@@ -485,7 +533,7 @@ export default function Navbar() {
                         </AnimatePresence>
                       </div>
 
-                      {/* BOTTOM AUXILIARY BANNER COMPONENT: HIGHLIGHTED COMPACT BANNER CONTACT ROW */}
+                      {/* COMPACT FLOATING BOTTOM FOOTER SUPPORT CTA BANNER */}
                       <div className="bg-gradient-to-r from-slate-900 to-[#0A2E6F] rounded-2xl p-4 md:p-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl shrink-0">
                         <div className="flex items-center gap-3.5 text-center sm:text-left">
                           <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/10 hidden sm:flex">
@@ -497,14 +545,13 @@ export default function Navbar() {
                           </div>
                         </div>
 
-                        {/* Optimally Shrunk Mini Action Button Structure */}
                         <Link 
                           href="/contact" 
                           onClick={handleCloseCatalogs}
-                          className="flex items-center gap-1.5 bg-white text-[#0A2E6F] hover:bg-slate-100 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider shadow-md active:scale-[0.98] transition-all shrink-0 w-full sm:w-auto justify-center"
+                          className="flex items-center gap-1.5 bg-white text-[#0A2E6F] hover:bg-slate-100 px-3 py-2 text-[11px] font-black uppercase tracking-wider shadow-md active:scale-[0.98] transition-all shrink-0 w-full sm:w-auto justify-center rounded-xl"
                         >
                           <span>Contact Office</span>
-                          <ArrowUpRight size={13} />
+                          <ArrowUpRight size={12} />
                         </Link>
                       </div>
 
