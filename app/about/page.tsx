@@ -9,27 +9,41 @@ import { motion, type Transition } from "framer-motion";
 import {
   Award,
   ShieldCheck,
-  Clock3,
-  Building2,
   CheckCircle2,
   ArrowRight,
   Sparkles,
   Briefcase,
   Quote,
   Target,
-  Compass
+  Compass,
+  Cpu,
+  Binary,
+  Wrench,
+  Layers,
+  Settings,
+  ChevronRight,
+  GraduationCap,
+  Hammer,
+  FileText,
+  Phone
 } from "lucide-react";
-
 
 const smoothFadeUp = {
   initial: { opacity: 0, y: 40 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
+  viewport: { once: true, margin: "-50px" },
   transition: {
     duration: 0.8,
-    ease: "easeOut",
+    ease: [0.16, 1, 0.3, 1],
   } satisfies Transition,
 };
+
+const timelineCardVariants = (index: number) => ({
+  initial: { opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 20 },
+  whileInView: { opacity: 1, x: 0, y: 0 },
+  viewport: { once: true, margin: "-100px" },
+  transition: { type: "spring", damping: 25, stiffness: 140, delay: 0.1 }
+});
 
 export default function AboutPage() {
   return (
@@ -49,11 +63,11 @@ export default function AboutPage() {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
                 className="lg:col-span-7"
               >
                 <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#0A2E6F]/5 border border-[#0A2E6F]/10 text-xs font-bold uppercase tracking-wider text-[#0A2E6F]">
-                  <Sparkles size={12} className="animate-pulse" />
+                  <Sparkles size={12} className="text-blue-600 animate-pulse" />
                   Our Legacy Blueprint
                 </span>
 
@@ -71,35 +85,39 @@ export default function AboutPage() {
 
                 {/* FUNCTIONAL ENHANCED CTAs */}
                 <div className="flex flex-wrap sm:flex-nowrap gap-4 mt-10">
-                  <Link
-                    href="/contact"
-                    className="group w-full sm:w-auto bg-[#0A2E6F] hover:bg-[#072456] text-white px-8 py-4 rounded-2xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(10,46,111,0.15)] hover:shadow-[0_15px_30px_rgba(10,46,111,0.25)] transition-all duration-300 transform hover:-translate-y-0.5"
-                  >
-                    Get In Touch
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
-                  </Link>
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+                    <Link
+                      href="/contact"
+                      className="group w-full bg-[#0A2E6F] hover:bg-[#072456] text-white px-8 py-4 rounded-2xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(10,46,111,0.15)] hover:shadow-[0_15px_30px_rgba(10,46,111,0.25)] transition-all duration-300"
+                    >
+                      Get In Touch
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
+                    </Link>
+                  </motion.div>
 
-                  <Link
-                    href="/windows-doors"
-                    className="w-full sm:w-auto border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-[#071224] px-8 py-4 rounded-2xl transition-all duration-300 font-bold text-sm tracking-wide flex items-center justify-center"
-                  >
-                    Explore Services
-                  </Link>
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+                    <Link
+                      href="/windows-doors"
+                      className="w-full border border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 text-[#071224] px-8 py-4 rounded-2xl transition-all duration-300 font-bold text-sm tracking-wide flex items-center justify-center"
+                    >
+                      Explore Services
+                    </Link>
+                  </motion.div>
                 </div>
 
                 {/* COUNTER TILES */}
-                <div className="grid grid-cols-3 gap-6 mt-16 p-6 rounded-2xl bg-white border border-slate-200/60 shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
+                <div className="grid grid-cols-3 gap-4 sm:grid-cols-3 sm:gap-6 mt-16 p-6 rounded-2xl bg-white border border-slate-200/60 shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
                   {[
-                    { value: 500, suffix: "+", label: "Projects Delivered" },
-                    { value: 15, suffix: "+", label: "Years Experience" },
+                    { value: 1000, suffix: "+", label: "Projects Delivered" },
+                    { value: 17, suffix: "+", label: "Years Experience" },
                     { value: 98, suffix: "%", label: "Satisfied Retainers" },
                   ].map((item, index) => (
-                    <div key={index} className="flex flex-col">
+                    <div key={index} className="flex flex-col text-center sm:text-left">
                       <h3 className="text-2xl sm:text-4xl font-black text-[#0A2E6F] tracking-tight">
                         <CountUp end={item.value} duration={3} delay={0.2} enableScrollSpy scrollSpyOnce />
                         {item.suffix}
                       </h3>
-                      <p className="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">
+                      <p className="text-[9px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1 leading-tight">
                         {item.label}
                       </p>
                     </div>
@@ -111,87 +129,167 @@ export default function AboutPage() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.96, x: 30 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
                 className="lg:col-span-5 relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#0A2E6F]/10 to-transparent rounded-[32px] pointer-events-none z-10" />
                 <img
                   src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2200"
                   alt="Simmply Perfect Architecture Look"
-                  className="w-full h-[500px] lg:h-[650px] object-cover rounded-[32px] border border-slate-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
+                  className="w-full h-[450px] sm:h-[500px] lg:h-[650px] object-cover rounded-[32px] border border-slate-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.06)]"
                 />
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* FOUNDER PROFILE AND EXECUTIVE VISIONARY CONSOLE */}
-        <section className="py-28 bg-white border-y border-slate-100">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-16 items-center">
+        {/* HIGH-DENSITY PROFESSIONAL EXECUTIVE CABINET CONSOLE */}
+        <section className="py-24 sm:py-32 bg-[#091122] text-white border-y border-slate-800 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff02_1px,transparent_1px)] bg-[size:20px_24px] pointer-events-none opacity-80" />
+          <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-blue-500/[0.03] rounded-full blur-[130px] pointer-events-none" />
+          <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[#0A2E6F]/10 rounded-full blur-[120px] pointer-events-none" />
+
+          <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
               
-              {/* FOUNDER PORTRAIT WRAPPER */}
+              {/* STICKY SIDEBAR AVATAR & QUOTE HUB */}
               <motion.div 
                 {...smoothFadeUp}
-                className="lg:col-span-5 relative"
+                className="lg:col-span-4 flex flex-col justify-between gap-6"
               >
-                <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-[#0A2E6F]/5 rounded-3xl -z-10" />
-                <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2000" 
-                  alt="Founder of Simmply Perfect Group"
-                  className="w-full h-[550px] object-cover rounded-[28px] border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.04)]"
-                />
-                
-                {/* FLOATING SIGNATURE CARD */}
-                <div className="absolute bottom-6 left-6 right-6 bg-slate-900/90 backdrop-blur-md p-5 rounded-2xl border border-white/10 text-white">
-                  <Quote className="text-blue-400 mb-2 opacity-60" size={20} />
-                  <p className="text-xs italic font-medium text-slate-300 leading-relaxed">
-                    &quot;Design is not merely structural geometry; it is the physical medium through which personal lifestyle experiences are articulated.&quot;
-                  </p>
-                  <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-                    <div>
-                      <h4 className="text-sm font-bold tracking-tight">Executive Management</h4>
-                      <p className="text-[10px] text-blue-400 font-semibold uppercase tracking-wider mt-0.5">Founder & Managing Director</p>
+                <div className="space-y-6 lg:sticky lg:top-32">
+                  <div className="relative rounded-3xl overflow-hidden border border-white/[0.08] bg-slate-950 z-20 shadow-2xl group">
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-90 z-10" />
+                    <img
+                      src="/founder.jpg" 
+                      alt="Aakaash Deep Shrivastava"
+                      className="w-full h-[440px] md:h-[500px] object-cover rounded-3xl group-hover:scale-[1.015] transition-transform duration-500 ease-out"
+                    />
+                    <div className="absolute bottom-0 inset-x-0 p-6 z-20 space-y-1">
+                      <h3 className="text-2xl font-black tracking-tight text-white">Aakaash Deep Shrivastava</h3>
+                      <p className="text-xs text-blue-400 font-black uppercase tracking-widest">Founder & Technical Director</p>
+                      <div className="pt-2 flex items-center gap-2 text-xs text-slate-400">
+                        <Briefcase size={14} className="text-blue-500 shrink-0" />
+                        <span className="font-medium">17+ Years Combined Experience</span>
+                      </div>
                     </div>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md relative shadow-inner">
+                    <Quote className="text-blue-500/10 absolute top-4 left-4" size={32} />
+                    <p className="text-xs text-slate-300 italic leading-relaxed relative z-10 pl-5 font-medium">
+                      &quot;Industrial manufacturing logic and tolerance constraints are what ultimately distinguish luxury conceptual drafts from real-world structural milestones.&quot;
+                    </p>
                   </div>
                 </div>
               </motion.div>
 
-              {/* FOUNDER DEEP HISTORICAL PROFILE STATEMENT */}
+              {/* TECHNICAL INTEGRATION MATRIX */}
               <motion.div 
                 {...smoothFadeUp}
                 transition={{ ...smoothFadeUp.transition, delay: 0.1 }}
-                className="lg:col-span-7"
+                className="lg:col-span-8 flex flex-col justify-between space-y-8"
               >
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">
-                  <Briefcase size={14} />
-                  Leadership Profile
-                </span>
-                <h2 className="mt-4 text-4xl font-black text-[#071224] tracking-tight leading-tight">
-                  The Visionary Architect Behind Our Legacy
-                </h2>
-                
-                <p className="mt-6 text-slate-600 text-base leading-relaxed font-medium">
-                  Founded over fifteen years ago under a singular directive, our Managing Director built Simmply Perfect Group out of a passion for immaculate structural physics and high-luxury living form. What started as an avant-garde studio layout in India has scale-transited into a premium consortium trusted by top-tier real estate developers and refined homeowners alike.
-                </p>
-
-                <p className="mt-4 text-slate-600 text-base leading-relaxed">
-                  Under this direct architectural stewardship, the firm introduced world-class multi-sliding insulated profile frameworks and customized modular luxury joinery setups, bridging the systemic void between premium global manufacturing tolerances and regional building needs.
-                </p>
-
-                <div className="grid sm:grid-cols-2 gap-4 mt-8">
-                  {[
-                    "Uncompromising Structural Integrity",
-                    "Aesthetic and Functional Harmony",
-                    "Customer Centric Iterative Workflows",
-                    "Sustainable Resource Integration",
-                  ].map((pillText, i) => (
-                    <div key={i} className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                      <CheckCircle2 size={16} className="text-[#0A2E6F] shrink-0 mt-0.5" />
-                      <span className="text-xs font-bold text-slate-700 leading-tight">{pillText}</span>
-                    </div>
-                  ))}
+                <div className="space-y-3 text-center lg:text-left">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-blue-500/10 border border-blue-500/20 text-[10px] font-black uppercase tracking-widest text-blue-400 shadow-sm">
+                    <Settings size={12} className="animate-spin-slow" />
+                    <span>Subject Matter Expert: Injection Molding & Extrusion</span>
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl font-black tracking-tight leading-none text-white">
+                    Polymer Science Engineering & Tooling Diagnostics
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-light">
+                    Directing cross-functional architecture across specialized Research & Development (R&D), advanced tool component designs, macro manufacturing setups, and predictive maintenance logs, bridging high-tolerance polymer processing into modern structural spaces.
+                  </p>
                 </div>
+
+                {/* DOMAIN SKILLS GRID */}
+                <div className="bg-white/[0.01] border border-white/[0.05] rounded-2xl p-5 space-y-3 shadow-inner">
+                  <h4 className="text-[11px] font-black uppercase tracking-widest text-blue-400 flex items-center gap-2">
+                    <Cpu size={14} /> Core Domain Competencies
+                  </h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+                    {[
+                      "Plastic Product Design",
+                      "Plastic Flow Analysis",
+                      "Plastic Mold Design",
+                      "New Product Development",
+                      "Tool & Die Making",
+                      "Plastic Mold Manufacturing",
+                      "UPVC Gasket Die Design",
+                      "UPVC Extrusion Process Expert",
+                      "Sustainable Mechanical Engineering"
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-2 p-3 rounded-xl bg-slate-900/60 border border-white/[0.04]">
+                        <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
+                        <span className="text-xs font-bold text-slate-200 tracking-wide truncate">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CAD & CAE EXPERTISES */}
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* CAD CONTROLS */}
+                  <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.05] space-y-2.5">
+                    <h5 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
+                      <Wrench size={14} className="text-blue-400" /> Advanced CAD Suites
+                    </h5>
+                    <p className="text-xs text-slate-400 leading-relaxed font-light">
+                      Complete functional drafting mastery across <span className="text-white font-semibold">AutoCAD, Creo, CATIA, NX-CAD, Solidworks</span>, and <span className="text-white font-semibold">Autodesk Inventor</span> environments.
+                    </p>
+                  </div>
+                  {/* CAE SIMULATIONS */}
+                  <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.05] space-y-2.5">
+                    <h5 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
+                      <Binary size={14} className="text-purple-400" /> CAE Computational Analysis
+                    </h5>
+                    <p className="text-xs text-slate-400 leading-relaxed font-light">
+                      Excellent proven expertise in executing structural Static & Dynamic Analysis within <span className="text-white font-semibold">Ansys Workbench, Ansys Fluent, Solidworks Plastics</span>, and <span className="text-white font-semibold">Moldflow</span> setups.
+                    </p>
+                  </div>
+                </div>
+
+                {/* PRODUCT LIFECYCLE & MANUFACTURING TOOLS COGNITION */}
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* PLM SOFTWARE */}
+                  <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.05] space-y-2">
+                    <h5 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
+                      <Layers size={14} className="text-cyan-400" /> PLM Integration Networks
+                    </h5>
+                    <p className="text-xs text-slate-400 font-light leading-relaxed">
+                      Sustained handling knowledge of enterprise Product Lifecycle Management software structures including <span className="text-white">Team Center, Enovia, PTC Windchill</span>, and automated <span className="text-white">Agile</span> frameworks.
+                    </p>
+                  </div>
+                  {/* DIAGNOSTIC VALUE TOOLS */}
+                  <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.05] space-y-2">
+                    <h5 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
+                      <Settings size={14} className="text-amber-400" /> Methodologies & Diagnostics
+                    </h5>
+                    <p className="text-xs text-slate-400 font-light leading-relaxed">
+                      Optimized implementation workflows for Value/Reverse Engineering, Kaizen, Poke-Yoke, 5S, TQM, 80/20 Rule, Bathtub Curve, RCA, Fish bone diagramming, DFMEA, PFMEA, Stackup Analysis, and Statical Tolerance Analysis (RSS & WCS).
+                    </p>
+                  </div>
+                </div>
+
+                {/* METICULOUS REVISION STAMP NOTE */}
+                <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-950 to-slate-900 border border-white/[0.05] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block">Documentation Support & Domains</span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-light">
+                      Engineered across high-density consumer footprints including Household, Automotive, Construction, Electrical & Electronics, Mechatronics, and Healthcare sectors utilizing vector graphic pipelines like <span className="text-white font-bold">Adobe Illustrator, Adobe Photoshop</span>, and MS Office modules.
+                    </p>
+                  </div>
+                </div>
+
+                {/* RESEARCH & PAPERS FOOTER STRIP */}
+                <div className="flex items-start gap-3 p-4 bg-blue-500/[0.02] border border-blue-500/10 rounded-xl text-xs text-slate-400 font-medium">
+                  <GraduationCap size={16} className="text-blue-400 shrink-0 mt-0.5" />
+                  <p className="leading-normal">
+                    Certified in Autodesk Moldflow (2015), PTC Creo (2014), Solidworks Core (2015), CATIA (2016), Solidworks Plastics (2016), and AutoCAD / Inventor (2017). Published <span className="text-white font-bold">8 independent international research papers</span> mapping the optimization matrix pipelines of custom injection molds.
+                  </p>
+                </div>
+
               </motion.div>
 
             </div>
@@ -203,15 +301,17 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid lg:grid-cols-12 gap-16 items-center">
               
-              {/* NARRATIVE TEXT (LEFT - 7 COLS) */}
+              {/* NARRATIVE TEXT */}
               <motion.div {...smoothFadeUp} className="lg:col-span-7">
-                <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">
-                  Operational Creed
-                </span>
-                <h2 className="mt-4 text-4xl font-black text-[#071224] tracking-tight leading-tight">
-                  Building Exceptional Spaces Through Innovation & Quality
-                </h2>
-                <p className="mt-6 text-slate-600 text-base leading-relaxed">
+                <div className="text-center lg:text-left space-y-4">
+                  <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">
+                    Operational Creed
+                  </span>
+                  <h2 className="text-4xl font-black text-[#071224] tracking-tight leading-tight">
+                    Building Exceptional Spaces Through Innovation & Quality
+                  </h2>
+                </div>
+                <p className="mt-6 text-slate-600 text-base leading-relaxed text-center lg:text-left">
                   Simmply Perfect Group operates as a synchronized structural hub providing end-to-end management frameworks across state-of-the-art building domains. We minimize developer execution fragmentation by providing architectural solutions under one single elite umbrella system.
                 </p>
 
@@ -224,7 +324,7 @@ export default function AboutPage() {
                     "Rigorous Laboratory Quality Control Assurance",
                     "Strict Timeline Milestone Project Delivery",
                   ].map((item) => (
-                    <div key={item} className="flex items-center gap-3 py-1">
+                    <div key={item} className="flex items-center gap-3 py-1 justify-center lg:justify-start">
                       <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
                       <span className="font-semibold text-sm text-slate-700">{item}</span>
                     </div>
@@ -232,7 +332,7 @@ export default function AboutPage() {
                 </div>
               </motion.div>
 
-              {/* CORPORATE STILL IMAGERY (RIGHT - 5 COLS) */}
+              {/* CORPORATE STILL IMAGERY */}
               <motion.div 
                 {...smoothFadeUp}
                 transition={{ ...smoothFadeUp.transition, delay: 0.1 }}
@@ -259,8 +359,8 @@ export default function AboutPage() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
               {[
-                { count: 500, suffix: "+", desc: "Premium Projects Transmitted" },
-                { count: 15, suffix: "+", desc: "Years Institutional Standing" },
+                { count: 1000, suffix: "+", desc: "Premium Projects Transmitted" },
+                { count: 13, suffix: "+", desc: "Years Experience Hierarchy" },
                 { count: 98, suffix: "%", desc: "Audited Retention & Satisfaction" },
                 { count: 50, suffix: "+", desc: "In-House Subject Matter Experts" },
               ].map((item, index) => (
@@ -367,35 +467,60 @@ export default function AboutPage() {
         </section>
 
         {/* CHRONOLOGICAL HISTORICAL MILESTONES */}
-        <section className="py-28 bg-white">
+        <section className="py-28 bg-white relative">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="text-center max-w-xl mx-auto">
+            <div className="text-center max-w-xl mx-auto space-y-2">
               <span className="text-xs font-bold tracking-widest text-[#0A2E6F] uppercase">Our Journey Timeline</span>
-              <h2 className="mt-3 text-4xl font-black text-[#071224] tracking-tight">Building A Legacy Of Absolute Quality</h2>
+              <h2 className="text-4xl font-black text-[#071224] tracking-tight">Building A Legacy Of Absolute Quality</h2>
             </div>
 
-            <div className="relative mt-20 max-w-4xl mx-auto">
-              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[1.5px] bg-slate-200 -translate-x-1/2" />
+            <div className="relative mt-24 max-w-4xl mx-auto">
+              <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#0A2E6F]/20 via-slate-200 to-slate-200/10 -translate-x-1/2" />
 
               {[
-                { year: "2010", title: "Corporate Inception", desc: "Studio operational foundation established with a singular vision to deploy high-grade premium fenestration solutions." },
-                { year: "2015", title: "Luxury Interiors Division", desc: "Scaled capability verticals into customized multi-residential turnkey indoor design management profiles." },
-                { year: "2018", title: "Systemic Fenestration Integration", desc: "Introduced advanced global architectural profile configurations for luxury structural windows and doors." },
-                { year: "2022", title: "Turnkey Property Transformation", desc: "Deployed targeted structural modification units for large-scale premium asset overhauls." },
-                { year: "2026", title: "500+ Project Matrix Milestone", desc: "Solidified market authority status with cross-industry project recognition metrics achieved successfully." }
+                { 
+                  year: "2013", 
+                  title: "Bespoke Foundations", 
+                  desc: "Started with bespoke window replacements and repairs." 
+                },
+                { 
+                  year: "2016", 
+                  title: "uPVC Integration", 
+                  desc: "Added uPVC systems—sliding, casement, ventilators." 
+                },
+                { 
+                  year: "2019", 
+                  title: "Material Expansion", 
+                  desc: "Expanded to aluminum facades and premium hardware." 
+                },
+                { 
+                  year: "2022", 
+                  title: "Mass Operational Delivery", 
+                  desc: "1,000th project delivered with 4.9★ average feedback." 
+                },
+                { 
+                  year: "2024-26", 
+                  title: "Client Care Frameworks", 
+                  desc: "Dedicated after-sales and AMC support program." 
+                }
               ].map((milestone, index) => (
-                <motion.div
+                <div
                   key={index}
-                  {...smoothFadeUp}
-                  className={`relative flex items-stretch mb-12 last:mb-0 flex-col md:flex-row ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  className={`relative flex items-stretch mb-16 last:mb-0 flex-col md:flex-row ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
                 >
-                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#0A2E6F] ring-4 ring-white shadow z-10 top-6" />
-                  <div className="ml-12 md:ml-0 md:w-[46%] bg-slate-50/80 p-6 rounded-2xl border border-slate-200/60 shadow-[0_8px_24px_rgba(0,0,0,0.01)]">
-                    <span className="text-xl font-black text-[#0A2E6F]">{milestone.year}</span>
-                    <h4 className="text-base font-bold text-[#071224] mt-1 tracking-tight">{milestone.title}</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed font-medium mt-2">{milestone.desc}</p>
+                  <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#0A2E6F] ring-4 ring-white shadow-md z-10 top-6">
+                    <span className="absolute inset-0 rounded-full bg-[#0A2E6F] animate-ping opacity-25" />
                   </div>
-                </motion.div>
+
+                  <motion.div 
+                    {...timelineCardVariants(index)}
+                    className="ml-14 md:ml-0 md:w-[45%] bg-white hover:bg-slate-50 p-6 rounded-3xl border border-slate-200/70 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_rgba(10,46,111,0.05)] transition-all duration-300 text-left"
+                  >
+                    <span className="inline-block text-xl font-black text-[#0A2E6F] bg-[#0A2E6F]/5 px-3 py-1 rounded-xl shadow-inner">{milestone.year}</span>
+                    <h4 className="text-lg font-extrabold text-[#071224] mt-3 tracking-tight">{milestone.title}</h4>
+                    <p className="text-xs text-slate-500 leading-relaxed font-medium mt-2">{milestone.desc}</p>
+                  </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -409,18 +534,18 @@ export default function AboutPage() {
               {/* VISION METRIC */}
               <motion.div {...smoothFadeUp} className="bg-white rounded-3xl p-10 border border-slate-200/60 shadow-[0_12px_32px_rgba(0,0,0,0.02)] flex flex-col justify-between">
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-[#0A2E6F]/5 text-[#0A2E6F] flex items-center justify-center"><Target size={20} /></div>
-                  <h3 className="text-2xl font-black text-[#071224] tracking-tight mt-6">Our Strategic Vision</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed font-medium mt-3">To remain the gold standard configuration partner for ultra-premium window, door, and spatial design integration, elevating living environments flawlessly across national spaces.</p>
+                  <div className="w-10 h-10 rounded-xl bg-[#0A2E6F]/5 text-[#0A2E6F] flex items-center justify-center mx-auto lg:mx-0"><Target size={20} /></div>
+                  <h3 className="text-2xl font-black text-[#071224] tracking-tight mt-6 text-center">Our Strategic Vision</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed font-medium mt-3 text-center">To remain the gold standard configuration partner for ultra-premium window, door, and spatial design integration, elevating living environments flawlessly across national spaces.</p>
                 </div>
               </motion.div>
 
               {/* MISSION METRIC */}
               <motion.div {...smoothFadeUp} transition={{ ...smoothFadeUp.transition, delay: 0.1 }} className="bg-[#071224] text-white rounded-3xl p-10 flex flex-col justify-between">
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-white/10 text-blue-400 flex items-center justify-center"><Compass size={20} /></div>
-                  <h3 className="text-2xl font-black tracking-tight mt-6">Our Execution Mission</h3>
-                  <p className="text-sm text-white/70 leading-relaxed mt-3">To continuously transform real estate assets using rigorous industrial engineering principles, premium sourced compositions, and uncompromised craftsmanship metrics.</p>
+                  <div className="w-10 h-10 rounded-xl bg-white/10 text-blue-400 flex items-center justify-center mx-auto lg:mx-0"><Compass size={20} /></div>
+                  <h3 className="text-2xl font-black tracking-tight mt-6 text-center">Our Execution Mission</h3>
+                  <p className="text-sm text-white/70 leading-relaxed mt-3 text-center">To continuously transform real estate assets using rigorous industrial engineering principles, premium sourced compositions, and uncompromised craftsmanship metrics.</p>
                 </div>
               </motion.div>
 
@@ -441,14 +566,14 @@ export default function AboutPage() {
                 { ph: "01", t: "Discovery & Context", d: "Documenting client vision parameters, structural limitations, and budgetary scope." },
                 { ph: "02", t: "System Planning", d: "Formulating technical resource layouts, component orders, and timeline tracking blueprints." },
                 { ph: "03", t: "Bespoke Engineering", d: "Developing specialized 3D mockups and customized hardware selections." },
-                { ph: "04", t: "Operational Onsite Execution", d: "Deploying senior engineering personnel to manage architectural implementation layers." },
+                { ph: "04", t: "Onsite Execution", d: "Deploying senior engineering personnel to manage architectural implementation layers." },
                 { ph: "05", t: "Certified Handover", d: "Final inspection pass against high tolerance parameters and deployment release." }
               ].map((phase, idx) => (
                 <motion.div
                   key={idx}
                   {...smoothFadeUp}
                   transition={{ ...smoothFadeUp.transition, delay: idx * 0.05 }}
-                  className="bg-slate-50 rounded-2xl p-6 border border-slate-100 shadow-[0_8px_24px_rgba(0,0,0,0.01)]"
+                  className="bg-slate-50 rounded-2xl p-6 border border-slate-100 shadow-[0_8px_24px_rgba(0,0,0,0.01)] text-center"
                 >
                   <span className="text-4xl font-black text-[#0A2E6F]/15 tracking-tight">{phase.ph}</span>
                   <h4 className="text-base font-bold text-[#071224] mt-3 tracking-tight">{phase.t}</h4>
@@ -465,9 +590,11 @@ export default function AboutPage() {
             <div className="grid lg:grid-cols-12 gap-16 items-center">
               
               <motion.div {...smoothFadeUp} className="lg:col-span-7">
-                <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">Personnel Capital</span>
-                <h2 className="mt-4 text-4xl font-black text-[#071224] tracking-tight leading-tight">A High-Performance Engineering Culture</h2>
-                <p className="mt-6 text-slate-600 text-base leading-relaxed">
+                <div className="text-center space-y-4">
+                  <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">Personnel Capital</span>
+                  <h2 className="text-4xl font-black text-[#071224] tracking-tight leading-tight">A High-Performance Engineering Culture</h2>
+                </div>
+                <p className="mt-6 text-slate-600 text-base leading-relaxed text-center">
                   Our internal design coordinators, production engineers, material technicians, and field installation supervisors share matching performance metrics. Every deployment sub-system operates under single point supervisor oversight to ensure perfect quality handovers.
                 </p>
               </motion.div>
@@ -491,8 +618,8 @@ export default function AboutPage() {
         {/* STYLISH PERSISTENT OUTBOUND PORTAL */}
         <section className="relative py-36 overflow-hidden bg-[#071224]">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#0A2E6F]/30 rounded-full blur-[120px]" />
+          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#0A2E6F]/30 rounded-full blur-[120px] pointer-events-none" />
 
           <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
             <motion.h2 {...smoothFadeUp} className="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight">
