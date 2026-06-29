@@ -21,11 +21,8 @@ import {
   Wrench,
   Layers,
   Settings,
-  ChevronRight,
   GraduationCap,
-  Hammer,
-  FileText,
-  Phone
+  Hammer
 } from "lucide-react";
 
 const smoothFadeUp = {
@@ -38,11 +35,17 @@ const smoothFadeUp = {
   } satisfies Transition,
 };
 
+// Fixed typing bounds explicitly here to eliminate the string assignment mismatch on Vercel
 const timelineCardVariants = (index: number) => ({
   initial: { opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 20 },
   whileInView: { opacity: 1, x: 0, y: 0 },
   viewport: { once: true, margin: "-100px" },
-  transition: { type: "spring", damping: 25, stiffness: 140, delay: 0.1 }
+  transition: { 
+    type: "spring" as const, // Explicit literal casting sets it exactly to the rigid union variant expected
+    damping: 25, 
+    stiffness: 140, 
+    delay: 0.1 
+  }
 });
 
 export default function AboutPage() {
@@ -88,7 +91,7 @@ export default function AboutPage() {
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
                     <Link
                       href="/contact"
-                      className="group w-full bg-[#0A2E6F] hover:bg-[#072456] text-white px-8 py-4 rounded-2xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(10,46,111,0.15)] hover:shadow-[0_15px_30px_rgba(10,46,111,0.25)] transition-all duration-300"
+                      className="group w-full sm:w-auto bg-[#0A2E6F] hover:bg-[#072456] text-white px-8 py-4 rounded-2xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(10,46,111,0.15)] hover:shadow-[0_15px_30px_rgba(10,46,111,0.25)] transition-all duration-300"
                     >
                       Get In Touch
                       <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
@@ -150,45 +153,43 @@ export default function AboutPage() {
           <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[#0A2E6F]/10 rounded-full blur-[120px] pointer-events-none" />
 
           <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
               
-              {/* STICKY SIDEBAR AVATAR & QUOTE HUB */}
+              {/* STICKY SIDEBAR AVATAR & QUOTE BLOCK */}
               <motion.div 
                 {...smoothFadeUp}
-                className="lg:col-span-4 flex flex-col justify-between gap-6"
+                className="lg:col-span-4 lg:sticky lg:top-32 space-y-5 flex flex-col"
               >
-                <div className="space-y-6 lg:sticky lg:top-32">
-                  <div className="relative rounded-3xl overflow-hidden border border-white/[0.08] bg-slate-950 z-20 shadow-2xl group">
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-90 z-10" />
-                    <img
-                      src="/founder.jpg" 
-                      alt="Aakaash Deep Shrivastava"
-                      className="w-full h-[440px] md:h-[500px] object-cover rounded-3xl group-hover:scale-[1.015] transition-transform duration-500 ease-out"
-                    />
-                    <div className="absolute bottom-0 inset-x-0 p-6 z-20 space-y-1">
-                      <h3 className="text-2xl font-black tracking-tight text-white">Aakaash Deep Shrivastava</h3>
-                      <p className="text-xs text-blue-400 font-black uppercase tracking-widest">Founder & Technical Director</p>
-                      <div className="pt-2 flex items-center gap-2 text-xs text-slate-400">
-                        <Briefcase size={14} className="text-blue-500 shrink-0" />
-                        <span className="font-medium">17+ Years Combined Experience</span>
-                      </div>
+                <div className="relative rounded-3xl overflow-hidden border border-white/[0.08] bg-slate-950 shadow-2xl group">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-90 z-10" />
+                  <img
+                    src="/founder.jpg" 
+                    alt="Aakaash Deep Shrivastava"
+                    className="w-full h-[440px] md:h-[500px] lg:h-[460px] xl:h-[500px] object-cover rounded-3xl group-hover:scale-[1.012] transition-transform duration-500 ease-out"
+                  />
+                  <div className="absolute bottom-0 inset-x-0 p-6 z-20 space-y-1">
+                    <h3 className="text-2xl font-black tracking-tight text-white">Aakaash Deep Shrivastava</h3>
+                    <p className="text-xs text-blue-400 font-black uppercase tracking-widest">Founder & Technical Director</p>
+                    <div className="pt-2 flex items-center gap-2 text-xs text-slate-400">
+                      <Briefcase size={14} className="text-blue-500 shrink-0" />
+                      <span className="font-medium">17+ Years Combined Experience</span>
                     </div>
                   </div>
+                </div>
 
-                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md relative shadow-inner">
-                    <Quote className="text-blue-500/10 absolute top-4 left-4" size={32} />
-                    <p className="text-xs text-slate-300 italic leading-relaxed relative z-10 pl-5 font-medium">
-                      &quot;Industrial manufacturing logic and tolerance constraints are what ultimately distinguish luxury conceptual drafts from real-world structural milestones.&quot;
-                    </p>
-                  </div>
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md relative shadow-inner">
+                  <Quote className="text-blue-500/10 absolute top-4 left-4" size={32} />
+                  <p className="text-xs text-slate-300 italic leading-relaxed relative z-10 pl-5 font-medium">
+                    &quot;Industrial manufacturing logic and tolerance constraints are what ultimately distinguish luxury conceptual drafts from real-world structural milestones.&quot;
+                  </p>
                 </div>
               </motion.div>
 
-              {/* TECHNICAL INTEGRATION MATRIX */}
+              {/* TECHNICAL INTEGRATION MATRIX DISPLAY PANEL */}
               <motion.div 
                 {...smoothFadeUp}
                 transition={{ ...smoothFadeUp.transition, delay: 0.1 }}
-                className="lg:col-span-8 flex flex-col justify-between space-y-8"
+                className="lg:col-span-8 space-y-6"
               >
                 <div className="space-y-3 text-center lg:text-left">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-blue-500/10 border border-blue-500/20 text-[10px] font-black uppercase tracking-widest text-blue-400 shadow-sm">
@@ -203,12 +204,12 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                {/* DOMAIN SKILLS GRID */}
+                {/* CORE COMPETENCIES COMPACT SUB-GRID */}
                 <div className="bg-white/[0.01] border border-white/[0.05] rounded-2xl p-5 space-y-3 shadow-inner">
                   <h4 className="text-[11px] font-black uppercase tracking-widest text-blue-400 flex items-center gap-2">
-                    <Cpu size={14} /> Core Domain Competencies
+                    <Cpu size={14} /> Domain Skills
                   </h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
                     {[
                       "Plastic Product Design",
                       "Plastic Flow Analysis",
@@ -220,29 +221,27 @@ export default function AboutPage() {
                       "UPVC Extrusion Process Expert",
                       "Sustainable Mechanical Engineering"
                     ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-2 p-3 rounded-xl bg-slate-900/60 border border-white/[0.04]">
-                        <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
+                      <div key={idx} className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-900/60 border border-white/[0.04]">
+                        <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
                         <span className="text-xs font-bold text-slate-200 tracking-wide truncate">{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* CAD & CAE EXPERTISES */}
+                {/* CAD & CAE METRIC TRACKS */}
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {/* CAD CONTROLS */}
                   <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.05] space-y-2.5">
                     <h5 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
-                      <Wrench size={14} className="text-blue-400" /> Advanced CAD Suites
+                      <Wrench size={14} className="text-blue-400" /> CAD Skills
                     </h5>
                     <p className="text-xs text-slate-400 leading-relaxed font-light">
                       Complete functional drafting mastery across <span className="text-white font-semibold">AutoCAD, Creo, CATIA, NX-CAD, Solidworks</span>, and <span className="text-white font-semibold">Autodesk Inventor</span> environments.
                     </p>
                   </div>
-                  {/* CAE SIMULATIONS */}
                   <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.05] space-y-2.5">
                     <h5 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
-                      <Binary size={14} className="text-purple-400" /> CAE Computational Analysis
+                      <Binary size={14} className="text-purple-400" /> CAE Skills
                     </h5>
                     <p className="text-xs text-slate-400 leading-relaxed font-light">
                       Excellent proven expertise in executing structural Static & Dynamic Analysis within <span className="text-white font-semibold">Ansys Workbench, Ansys Fluent, Solidworks Plastics</span>, and <span className="text-white font-semibold">Moldflow</span> setups.
@@ -250,44 +249,61 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                {/* PRODUCT LIFECYCLE & MANUFACTURING TOOLS COGNITION */}
+                {/* PLM CONTROL SYSTEMS AND PROCESS METHODOLOGIES */}
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {/* PLM SOFTWARE */}
                   <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.05] space-y-2">
                     <h5 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
-                      <Layers size={14} className="text-cyan-400" /> PLM Integration Networks
+                      <Layers size={14} className="text-cyan-400" /> PLM Software
                     </h5>
                     <p className="text-xs text-slate-400 font-light leading-relaxed">
                       Sustained handling knowledge of enterprise Product Lifecycle Management software structures including <span className="text-white">Team Center, Enovia, PTC Windchill</span>, and automated <span className="text-white">Agile</span> frameworks.
                     </p>
                   </div>
-                  {/* DIAGNOSTIC VALUE TOOLS */}
                   <div className="p-5 rounded-2xl bg-white/[0.01] border border-white/[0.05] space-y-2">
                     <h5 className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
-                      <Settings size={14} className="text-amber-400" /> Methodologies & Diagnostics
+                      <Settings size={14} className="text-amber-400" /> Tools & Methodologies
                     </h5>
                     <p className="text-xs text-slate-400 font-light leading-relaxed">
-                      Optimized implementation workflows for Value/Reverse Engineering, Kaizen, Poke-Yoke, 5S, TQM, 80/20 Rule, Bathtub Curve, RCA, Fish bone diagramming, DFMEA, PFMEA, Stackup Analysis, and Statical Tolerance Analysis (RSS & WCS).
+                      Optimized implementation workflows for Value Engineering, Reverse Engineering, Kaizen, Poke-Yoke, 5S, TQM, 80/20 Rule, Bathtub Curve, RCA, Fish bone diagram, DFMEA, PFMEA, Stackup Analysis, and Statical Tolerance Analysis (RSS & WCS).
                     </p>
                   </div>
                 </div>
 
-                {/* METICULOUS REVISION STAMP NOTE */}
-                <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-950 to-slate-900 border border-white/[0.05] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block">Documentation Support & Domains</span>
-                    <p className="text-xs text-slate-300 leading-relaxed font-light">
-                      Engineered across high-density consumer footprints including Household, Automotive, Construction, Electrical & Electronics, Mechatronics, and Healthcare sectors utilizing vector graphic pipelines like <span className="text-white font-bold">Adobe Illustrator, Adobe Photoshop</span>, and MS Office modules.
-                    </p>
-                  </div>
-                </div>
-
-                {/* RESEARCH & PAPERS FOOTER STRIP */}
-                <div className="flex items-start gap-3 p-4 bg-blue-500/[0.02] border border-blue-500/10 rounded-xl text-xs text-slate-400 font-medium">
-                  <GraduationCap size={16} className="text-blue-400 shrink-0 mt-0.5" />
-                  <p className="leading-normal">
-                    Certified in Autodesk Moldflow (2015), PTC Creo (2014), Solidworks Core (2015), CATIA (2016), Solidworks Plastics (2016), and AutoCAD / Inventor (2017). Published <span className="text-white font-bold">8 independent international research papers</span> mapping the optimization matrix pipelines of custom injection molds.
+                {/* DOCUMENTATION MATRIX CONSOLE */}
+                <div className="p-5 rounded-2xl bg-gradient-to-r from-slate-950 to-slate-900 border border-white/[0.05] space-y-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block">Documentation Support & Exposure</span>
+                  <p className="text-xs text-slate-300 leading-relaxed font-light">
+                    Providing analytical vector-graphic data records using <span className="text-white font-semibold">Adobe Illustrator, Adobe Photoshop</span>, and MS Office. Exposure to working in multiple industrial domains such as Household, Automobile, Construction, Electrical and Electronics, Mechatronics, and Medical/Healthcare fields.
                   </p>
+                </div>
+
+                {/* ACADEMIC RESEARCH SUMMARY PANEL */}
+                <div className="space-y-3">
+                  <h4 className="text-[11px] font-black uppercase tracking-widest text-blue-400 flex items-center gap-2">
+                    <Award size={14} /> Validated Certifications
+                  </h4>
+                  <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2">
+                    {[
+                      { title: "Autodesk", sub: "Moldflow '15" },
+                      { title: "PTC CREO", sub: "Tooling '14" },
+                      { title: "Solidworks", sub: "Core Eng. '15" },
+                      { title: "CATIA", sub: "Suite '16" },
+                      { title: "Solidworks", sub: "Plastics '16" },
+                      { title: "AutoCAD", sub: "Inventor '17" }
+                    ].map((badge, i) => (
+                      <div key={i} className="p-2 bg-slate-950/80 border border-white/[0.05] rounded-xl text-center shadow-sm">
+                        <span className="block text-[10px] font-black text-slate-200 tracking-tight truncate">{badge.title}</span>
+                        <span className="block text-[8px] text-blue-400 font-medium tracking-wide mt-0.5 whitespace-nowrap">{badge.sub}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-start gap-3 p-3.5 bg-blue-500/[0.01] border border-blue-500/10 rounded-xl text-xs text-slate-400 font-medium">
+                    <GraduationCap size={16} className="text-blue-400 shrink-0 mt-0.5" />
+                    <p className="leading-normal">
+                      Holds 6 years of active working knowledge performing Finite Element Analysis (FEA) using <span className="text-slate-300 font-bold">ANSYS, ABAQUS, and COMSOL</span>. Published <span className="text-white font-bold">8 independent international research papers</span> mapping the design and development framework metrics of modern injection molds.
+                    </p>
+                  </div>
                 </div>
 
               </motion.div>
@@ -311,7 +327,7 @@ export default function AboutPage() {
                     Building Exceptional Spaces Through Innovation & Quality
                   </h2>
                 </div>
-                <p className="mt-6 text-slate-600 text-base leading-relaxed text-center lg:text-left">
+                <p className="mt-6 text-slate-600 text-base leading-relaxed text-center">
                   Simmply Perfect Group operates as a synchronized structural hub providing end-to-end management frameworks across state-of-the-art building domains. We minimize developer execution fragmentation by providing architectural solutions under one single elite umbrella system.
                 </p>
 
