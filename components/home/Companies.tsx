@@ -13,7 +13,7 @@ const companies = [
     href: "/windows-doors",
     description:
       "Premium aluminium windows, designer doors, facade systems and customized architectural solutions built for modern living.",
-    image: "/companies/windows-doors.jpg",
+    image: "/windows-doors.jpg",
   },
   {
     number: "02",
@@ -22,7 +22,7 @@ const companies = [
     href: "/interiors",
     description:
       "Luxury interiors crafted with elegance, functionality and timeless design, transforming ordinary spaces into extraordinary experiences.",
-    image: "/companies/interiors.jpg",
+    image: "/interiors.jpg",
   },
   {
     number: "03",
@@ -31,7 +31,7 @@ const companies = [
     href: "/renovation",
     description:
       "Expert renovation services that modernize homes and commercial spaces with superior craftsmanship and innovative solutions.",
-    image: "/companies/renovation.jpg",
+    image: "/renovation.jpg",
   },
 ];
 
