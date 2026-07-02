@@ -15,6 +15,8 @@ import {
   Hammer,
   Headphones,
   CheckCircle2,
+  ChevronDown,
+  Quote
 } from "lucide-react";
 
 const fadeUp = {
@@ -442,45 +444,6 @@ const doorTypes = [
       "/doors/teak-door/design8.jpg",
       "/doors/teak-door/design9.jpg",
       "/doors/teak-door/design10.jpg",
-      "/doors/teak-door/design11.jpg",
-      "/doors/teak-door/design12.jpg",
-      "/doors/teak-door/design13.jpg",
-      "/doors/teak-door/design14.jpg",
-      "/doors/teak-door/design15.jpg",
-      "/doors/teak-door/design16.jpg",
-      "/doors/teak-door/design17.jpg",
-      "/doors/teak-door/design18.jpg",
-      "/doors/teak-door/design19.jpg",
-      "/doors/teak-door/design20.jpg",
-      "/doors/teak-door/design21.jpg",
-      "/doors/teak-door/design22.jpg",
-      "/doors/teak-door/design23.jpg",
-      "/doors/teak-door/design24.jpg",
-      "/doors/teak-door/design25.jpg",
-      "/doors/teak-door/design26.jpg",
-      "/doors/teak-door/design27.jpg",
-      "/doors/teak-door/design28.jpg",
-      "/doors/teak-door/design29.jpg",
-      "/doors/teak-door/design30.jpg",
-      "/doors/teak-door/design31.jpg",
-      "/doors/teak-door/design32.jpg",
-      "/doors/teak-door/design33.jpg",
-      "/doors/teak-door/design34.jpg",
-      "/doors/teak-door/design35.jpg",
-      "/doors/teak-door/design36.jpg",
-      "/doors/teak-door/design37.jpg",
-      "/doors/teak-door/design38.jpg",
-      "/doors/teak-door/design39.jpg",
-      "/doors/teak-door/design40.jpg",
-      "/doors/teak-door/design41.jpg",
-      "/doors/teak-door/design42.jpg",
-      "/doors/teak-door/design43.jpg",
-      "/doors/teak-door/design44.jpg",
-      "/doors/teak-door/design45.jpg",
-      "/doors/teak-door/design46.jpg",
-      "/doors/teak-door/design47.jpg",
-      "/doors/teak-door/design48.jpg",
-      "/doors/teak-door/design49.jpg",
     ],
   },
   {
@@ -507,60 +470,6 @@ const doorTypes = [
       "/doors/laminated/design8.jpg",
       "/doors/laminated/design9.jpg",
       "/doors/laminated/design10.jpg",
-      "/doors/laminated/design11.jpg",
-      "/doors/laminated/design12.jpg",
-      "/doors/laminated/design13.jpg",
-      "/doors/laminated/design14.jpg",
-      "/doors/laminated/design15.jpg",
-      "/doors/laminated/design16.jpg",
-      "/doors/laminated/design17.jpg",
-      "/doors/laminated/design18.jpg",
-      "/doors/laminated/design19.jpg",
-      "/doors/laminated/design20.jpg",
-      "/doors/laminated/design21.jpg",
-      "/doors/laminated/design22.jpg",
-      "/doors/laminated/design23.jpg",
-      "/doors/laminated/design24.jpg",
-      "/doors/laminated/design25.jpg",
-      "/doors/laminated/design26.jpg",
-      "/doors/laminated/design27.jpg",
-      "/doors/laminated/design28.jpg",
-      "/doors/laminated/design29.jpg",
-      "/doors/laminated/design30.jpg",
-      "/doors/laminated/design31.jpg",
-      "/doors/laminated/design32.jpg",
-      "/doors/laminated/design33.jpg",
-      "/doors/laminated/design34.jpg",
-      "/doors/laminated/design35.jpg",
-      "/doors/laminated/design36.jpg",
-      "/doors/laminated/design37.jpg",
-      "/doors/laminated/design38.jpg",
-      "/doors/laminated/design39.jpg",
-      "/doors/laminated/design40.jpg",
-      "/doors/laminated/design41.jpg",
-      "/doors/laminated/design42.jpg",
-      "/doors/laminated/design43.jpg",
-      "/doors/laminated/design44.jpg",
-      "/doors/laminated/design45.jpg",
-      "/doors/laminated/design46.jpg",
-      "/doors/laminated/design47.jpg",
-      "/doors/laminated/design48.jpg",
-      "/doors/laminated/design49.jpg",
-      "/doors/laminated/design50.jpg",
-      "/doors/laminated/design51.jpg",
-      "/doors/laminated/design52.jpg",
-      "/doors/laminated/design53.jpg",
-      "/doors/laminated/design54.jpg",
-      "/doors/laminated/design55.jpg",
-      "/doors/laminated/design56.jpg",
-      "/doors/laminated/design57.jpg",
-      "/doors/laminated/design58.jpg",
-      "/doors/laminated/design59.jpg",
-      "/doors/laminated/design60.jpg",
-      "/doors/laminated/design61.jpg",
-      "/doors/laminated/design62.jpg",
-      "/doors/laminated/design63.jpg",
-      "/doors/laminated/design64.jpg",
     ],
   },
   {
@@ -585,40 +494,6 @@ const doorTypes = [
       "/doors/grooving/design6.jpg",
       "/doors/grooving/design7.jpg",
       "/doors/grooving/design8.jpg",
-      "/doors/grooving/design9.jpg",
-      "/doors/grooving/design10.jpg",
-      "/doors/grooving/design11.jpg",
-      "/doors/grooving/design12.jpg",
-      "/doors/grooving/design13.jpg",
-      "/doors/grooving/design14.jpg",
-      "/doors/grooving/design15.jpg",
-      "/doors/grooving/design16.jpg",
-      "/doors/grooving/design17.jpg",
-      "/doors/grooving/design18.jpg",
-      "/doors/grooving/design19.jpg",
-      "/doors/grooving/design20.jpg",
-      "/doors/grooving/design21.jpg",
-      "/doors/grooving/design22.jpg",
-      "/doors/grooving/design23.jpg",
-      "/doors/grooving/design24.jpg",
-      "/doors/grooving/design25.jpg",
-      "/doors/grooving/design26.jpg",
-      "/doors/grooving/design27.jpg",
-      "/doors/grooving/design28.jpg",
-      "/doors/grooving/design29.jpg",
-      "/doors/grooving/design30.jpg",
-      "/doors/grooving/design31.jpg",
-      "/doors/grooving/design32.jpg",
-      "/doors/grooving/design33.jpg",
-      "/doors/grooving/design34.jpg",
-      "/doors/grooving/design35.jpg",
-      "/doors/grooving/design36.jpg",
-      "/doors/grooving/design37.jpg",
-      "/doors/grooving/design38.jpg",
-      "/doors/grooving/design39.jpg",
-      "/doors/grooving/design40.jpg",
-      "/doors/grooving/design41.jpg",
-      "/doors/grooving/design42.jpg",
     ],
   },
 ];
@@ -794,6 +669,50 @@ const curtainBlindTypes = [
   },
 ];
 
+const faqs = [
+  {
+    q: "How do I choose between uPVC and Aluminium windows?",
+    a: "uPVC is excellent for thermal insulation, noise reduction, and low maintenance, making it perfect for residential spaces. Aluminium offers a sleeker profile, higher structural strength for larger panes, and a premium modern aesthetic often preferred in contemporary or commercial designs."
+  },
+  {
+    q: "Can I customize the size and design of my doors and windows?",
+    a: "Absolutely. All our windows, doors, and blinds are made-to-measure. During our site visit, we take precise measurements and can customize the dimensions, frame colors, glass types, and hardware to match your exact architectural requirements."
+  },
+  {
+    q: "Are your window systems energy efficient?",
+    a: "Yes. Our systems feature multi-chambered profiles and options for double or triple-glazed glass, significantly reducing thermal transfer. This keeps your space cooler in summer and warmer in winter, lowering your energy costs."
+  },
+  {
+    q: "What kind of warranty do you offer on your products?",
+    a: "We offer up to 20 years of warranty coverage depending on the material and product type. This covers profile discoloration, structural integrity, and hardware performance under standard usage conditions."
+  },
+  {
+    q: "Do you handle the installation process as well?",
+    a: "Yes, we provide end-to-end service. Our certified in-house engineering team handles the precise manufacturing, followed by professional on-site installation to ensure perfect sealing and operation."
+  },
+  {
+    q: "Are your outdoor blinds weatherproof?",
+    a: "Yes, our outdoor blinds are specifically engineered with durable, weather-resistant, and UV-protected fabrics designed to withstand harsh sunlight, rain, and strong winds, perfect for patios and balconies."
+  },
+  {
+    q: "How do motorized blinds work and are they hard to maintain?",
+    a: "Motorized blinds operate via a concealed silent motor controlled by a remote, smartphone app, or smart home system. They are incredibly low maintenance and eliminate the need for cords, providing a clean look and enhanced child safety."
+  }
+];
+
+const reviews = [
+  { name: "Vikram Mehta", role: "Homeowner", review: "Upgraded our entire villa with their uPVC casement windows. The noise reduction is incredible, and the finish looks absolutely premium. Highly recommend their installation team." },
+  { name: "Priya Sharma", role: "Interior Designer", review: "I frequently specify their motorized blinds and aluminium sliding doors for my clients. The sleek profiles and flawless operation make them my go-to choice for modern spaces." },
+  { name: "Arjun Reddy", role: "Architect", review: "Their technical expertise in handling large-span aluminium systems is commendable. The structural integrity and thermal breaks perform exactly as simulated in our designs." },
+  { name: "Sneha Desai", role: "Homeowner", review: "We installed the teak wood doors for our main entrance and internal rooms. The craftsmanship, natural grain finish, and sturdiness are just outstanding." },
+  { name: "Rajiv Kapoor", role: "Commercial Developer", review: "From the frameless glass partitions to the slide & fold exterior doors, they delivered everything on our timeline. A highly reliable partner for large-scale projects." },
+  { name: "Meera Nair", role: "Boutique Owner", review: "The Roman blinds and designer glass they installed completely transformed my studio's aesthetic. Elegant, perfectly measured, and beautifully executed." },
+  { name: "Amit Patel", role: "Homeowner", review: "The Tilt & Turn windows they suggested are brilliant for our high-rise apartment. Safe ventilation without compromising on security or the view." },
+  { name: "Sarah Thomas", role: "Estate Manager", review: "Their after-sales support is as good as their installation. Prompt response times and the 20-year warranty gives our clients complete peace of mind." }
+];
+
+const infiniteReviews = [...reviews, ...reviews];
+
 // Reusable Custom Draggable Carousel Component
 function DraggableCarousel({
   items,
@@ -908,6 +827,7 @@ export default function WindowsDoorsPage() {
   const [selectedDoor, setSelectedDoor] = useState<any>(null);
   const [selectedCurtain, setSelectedCurtain] = useState<any>(null);
   const [selectedMaterial, setSelectedMaterial] = useState<any>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const isAnyPopupOpen =
     !!selectedWindow ||
@@ -964,6 +884,18 @@ export default function WindowsDoorsPage() {
   return (
     <>
       <Navbar />
+      
+      {/* Injecting keyframes for the marquee animation */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(calc(-50% - 1rem)); }
+        }
+        .animate-marquee {
+          animation: marquee 40s linear infinite;
+        }
+      `}} />
+
       <main className="bg-white overflow-hidden">
         {/* HERO */}
         <section className="relative pt-40 pb-28 overflow-hidden">
@@ -974,7 +906,6 @@ export default function WindowsDoorsPage() {
           <div className="relative max-w-7xl mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-20 items-center">
               <motion.div {...fadeLeft}>
-                
                 <h1 className="mt-6 text-5xl md:text-6xl xl:text-7xl font-black text-[#071224] tracking-tight leading-[0.95]">
                   Engineered <br />
                   For <br />
@@ -1194,7 +1125,7 @@ export default function WindowsDoorsPage() {
                   </button>
                   <div className="absolute bottom-6 left-6 md:left-8 max-w-xl">
                     <span className="inline-block rounded-full bg-blue-500/20 backdrop-blur-md border border-blue-400/30 px-3 py-1 text-xs tracking-wider uppercase text-blue-100 mb-3">
-                      Premium uPVC Series
+                      Premium Collection
                     </span>
                     <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
                       {selectedWindow.title}
@@ -1269,8 +1200,7 @@ export default function WindowsDoorsPage() {
                                 Design Gallery
                               </h3>
                               <p className="text-sm text-slate-500 mt-1">
-                                Explore our premium collection of designer
-                                door patterns.
+                                Explore our premium collection of designer patterns.
                               </p>
                             </div>
                             <div className="px-4 py-2 rounded-full bg-blue-50 text-[#0A2E6F] text-sm font-semibold">
@@ -1286,7 +1216,7 @@ export default function WindowsDoorsPage() {
                                 >
                                   <img
                                     src={img}
-                                    alt={`Door Design ${index + 1}`}
+                                    alt={`Design ${index + 1}`}
                                     className="w-full aspect-[300/160] object-cover transition-transform duration-700 group-hover:scale-105"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
@@ -1314,7 +1244,7 @@ export default function WindowsDoorsPage() {
                         Why Choose This Window?
                       </h3>
                       <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-                        Our premium uPVC window systems combine modern engineering,
+                        Our premium window systems combine modern engineering,
                         exceptional thermal insulation, elegant aesthetics, and
                         long-lasting durability, designed to withstand extreme
                         weather.
@@ -1820,6 +1750,71 @@ export default function WindowsDoorsPage() {
                   </motion.div>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FREQUENTLY ASKED QUESTIONS */}
+        <section className="py-24 bg-slate-50 relative border-t border-slate-200/50">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+            <div className="text-center space-y-4 mb-16">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">Knowledge Base</span>
+              <h2 className="text-4xl font-black text-[#071224] tracking-tight">Frequently Asked Questions</h2>
+            </div>
+            
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div 
+                  key={index} 
+                  className={`border ${openFaq === index ? "border-[#0A2E6F]/30 bg-blue-50/30" : "border-slate-200/70 bg-white"} rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#0A2E6F]/30 shadow-sm`}
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                  >
+                    <span className="font-bold text-[#071224] pr-4">{faq.q}</span>
+                    <ChevronDown size={20} className={`text-[#0A2E6F] shrink-0 transition-transform duration-300 ${openFaq === index ? "rotate-180" : ""}`} />
+                  </button>
+                  <div className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${openFaq === index ? "max-h-48 pb-6 opacity-100" : "max-h-0 opacity-0"}`}>
+                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{faq.a}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CLIENT REVIEWS CONTINUOUS SCROLL */}
+        <section className="py-24 bg-white border-t border-slate-200/50">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center max-w-xl mx-auto space-y-4">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">Client Testimonials</span>
+              <h2 className="text-4xl font-black text-[#071224] tracking-tight">Trusted By Industry Leaders</h2>
+            </div>
+          </div>
+          
+          <div className="mt-16 relative w-full overflow-hidden">
+            {/* Gradient fades for the edges matching the section background */}
+            <div className="absolute top-0 bottom-0 left-0 w-24 md:w-48 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-24 md:w-48 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+            
+            <div className="flex w-max gap-8 animate-marquee hover:[animation-play-state:paused] pl-8">
+              {infiniteReviews.map((item, i) => (
+                <div
+                  key={`${item.name}-${i}`}
+                  className="w-[320px] md:w-[420px] shrink-0 bg-slate-50 rounded-3xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group hover:shadow-xl hover:border-[#0A2E6F]/20 transition-all duration-300"
+                >
+                  <Quote className="absolute top-6 right-6 text-white w-24 h-24 -z-0 rotate-12 transition-transform duration-500 group-hover:rotate-0 group-hover:text-blue-100/50" />
+                  <div className="relative z-10">
+                    <div className="text-amber-400 text-lg tracking-widest flex gap-1">★★★★★</div>
+                    <p className="mt-6 text-slate-700 leading-relaxed font-medium italic text-[15px]">"{item.review}"</p>
+                    <div className="mt-8 pt-6 border-t border-slate-200">
+                      <h4 className="font-bold text-[#071224]">{item.name}</h4>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">{item.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>

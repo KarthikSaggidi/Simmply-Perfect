@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const companies = [
   {
@@ -12,8 +13,7 @@ const companies = [
     href: "/windows-doors",
     description:
       "Premium aluminium windows, designer doors, facade systems and customized architectural solutions built for modern living.",
-    image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
+    image: "/companies/windows-doors.jpg",
   },
   {
     number: "02",
@@ -22,8 +22,7 @@ const companies = [
     href: "/interiors",
     description:
       "Luxury interiors crafted with elegance, functionality and timeless design, transforming ordinary spaces into extraordinary experiences.",
-    image:
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80",
+    image: "/companies/interiors.jpg",
   },
   {
     number: "03",
@@ -32,8 +31,7 @@ const companies = [
     href: "/renovation",
     description:
       "Expert renovation services that modernize homes and commercial spaces with superior craftsmanship and innovative solutions.",
-    image:
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1600&q=80",
+    image: "/companies/renovation.jpg",
   },
 ];
 

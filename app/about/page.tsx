@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/home/Footer";
@@ -22,7 +23,8 @@ import {
   Layers,
   Settings,
   GraduationCap,
-  Hammer
+  Hammer,
+  ChevronDown
 } from "lucide-react";
 
 const smoothFadeUp = {
@@ -35,23 +37,85 @@ const smoothFadeUp = {
   } satisfies Transition,
 };
 
-// Fixed typing bounds explicitly here to eliminate the string assignment mismatch on Vercel
 const timelineCardVariants = (index: number) => ({
   initial: { opacity: 0, x: index % 2 === 0 ? -50 : 50, y: 20 },
   whileInView: { opacity: 1, x: 0, y: 0 },
   viewport: { once: true, margin: "-100px" },
   transition: { 
-    type: "spring" as const, // Explicit literal casting sets it exactly to the rigid union variant expected
+    type: "spring" as const, 
     damping: 25, 
     stiffness: 140, 
     delay: 0.1 
   }
 });
 
+// --- DATA FOR Q&A AND REVIEWS ---
+const faqs = [
+  { 
+    q: "What materials do you use for your window and door systems?", 
+    a: "We primarily utilize thermally broken architectural uPVC and high-grade structural Aluminium. These materials are engineered for maximum durability, superior acoustic degradation, and high wind-load resistance." 
+  },
+  { 
+    q: "Do you offer comprehensive warranties on your installations?", 
+    a: "Yes, all our premium sourced composite materials and installations come with an extensive warranty, typically spanning 10 to 15 years depending on the specific product tier and environmental conditions." 
+  },
+  { 
+    q: "How long does a typical bespoke renovation project take?", 
+    a: "Project timelines vary significantly based on scope and structural complexity. A standard luxury interior integration might take 4-8 weeks, while complete structural overhauls are mapped out during our Phase 01 Discovery process." 
+  },
+  { 
+    q: "Can your team handle custom geometric shapes for windows?", 
+    a: "Absolutely. Our advanced parametric design architecture allows us to manufacture bespoke geometric configurations without compromising the structural integrity or thermal efficiency of the unit." 
+  },
+  { 
+    q: "Are your interior and architectural designs energy efficient?", 
+    a: "Yes. Sustainability and energy efficiency are core to our engineering methodology. Our window systems feature multi-chambered profiles and double/triple glazing to significantly reduce thermal transfer." 
+  },
+  { 
+    q: "Do you manage the entire project or just supply materials?", 
+    a: "Simmply Perfect Group operates as an end-to-end management hub. We handle everything from initial architectural drafting and material sourcing to final onsite execution and certified handover." 
+  },
+  { 
+    q: "What is your process for quality assurance?", 
+    a: "We implement rigorous laboratory quality control and statical tolerance analysis during manufacturing, followed by a strict milestone inspection process onsite managed by our senior certified engineers." 
+  },
+  { 
+    q: "Do you provide after-sales support or maintenance?", 
+    a: "Yes, we maintain a dedicated after-sales and Annual Maintenance Contract (AMC) framework to ensure your architectural installations perform optimally for decades." 
+  }
+];
+
+const reviews = [
+  { name: "Rajesh Kumar", role: "Property Developer", review: "Simmply Perfect Group completely elevated our luxury villa project. Their uPVC profiles are world-class and the engineering execution was flawless from start to finish." },
+  { name: "Samantha D.", role: "Homeowner", review: "The acoustic insulation on these windows is unbelievable. We live near a busy highway and our home is now incredibly quiet. Worth every single penny." },
+  { name: "Vikram Singh", role: "Lead Architect", review: "The technical expertise in polymer science translates perfectly into their architectural systems. A highly reliable partner for large-scale structural nodes." },
+  { name: "Priya Menon", role: "Interior Designer", review: "Their bespoke interior studio is phenomenal. They matched our exact material specifications and delivered the custom millwork right on schedule without any compromises." },
+  { name: "Anand Gupta", role: "Commercial Contractor", review: "The end-to-end project management eliminated so much friction for us. Having a single point of accountability made the entire structural overhaul seamless." },
+  { name: "Elena R.", role: "Homeowner", review: "Beautiful craftsmanship and excellent customer service. The custom aluminium doors they installed in our patio are easily the highlight of our entire home." },
+  { name: "Suresh Reddy", role: "Estate Manager", review: "We hired them for a comprehensive restructuring of a heritage property. They respected the foundational criteria while upgrading the entire space flawlessly." },
+  { name: "Kavya T.", role: "Real Estate Investor", review: "Outstanding quality. The precision in their parametric designs and strict timeline adherence is exactly why I keep returning to them for all my properties." }
+];
+
+// Doubling the array to allow for a seamless infinite scroll effect
+const infiniteReviews = [...reviews, ...reviews];
+
 export default function AboutPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
   return (
     <>
       <Navbar />
+      
+      {/* Injecting keyframes for the marquee animation so it works natively */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(calc(-50% - 1rem)); }
+        }
+        .animate-marquee {
+          animation: marquee 40s linear infinite;
+        }
+      `}} />
 
       <main className="bg-[#FAFBFD] text-slate-900 overflow-hidden antialiased">
         
@@ -551,8 +615,8 @@ export default function AboutPage() {
               <motion.div {...smoothFadeUp} className="bg-white rounded-3xl p-10 border border-slate-200/60 shadow-[0_12px_32px_rgba(0,0,0,0.02)] flex flex-col justify-between">
                 <div>
                   <div className="w-10 h-10 rounded-xl bg-[#0A2E6F]/5 text-[#0A2E6F] flex items-center justify-center mx-auto lg:mx-0"><Target size={20} /></div>
-                  <h3 className="text-2xl font-black text-[#071224] tracking-tight mt-6 text-center">Our Strategic Vision</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed font-medium mt-3 text-center">To remain the gold standard configuration partner for ultra-premium window, door, and spatial design integration, elevating living environments flawlessly across national spaces.</p>
+                  <h3 className="text-2xl font-black text-[#071224] tracking-tight mt-6 text-center lg:text-left">Our Strategic Vision</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed font-medium mt-3 text-center lg:text-left">To remain the gold standard configuration partner for ultra-premium window, door, and spatial design integration, elevating living environments flawlessly across national spaces.</p>
                 </div>
               </motion.div>
 
@@ -560,8 +624,8 @@ export default function AboutPage() {
               <motion.div {...smoothFadeUp} transition={{ ...smoothFadeUp.transition, delay: 0.1 }} className="bg-[#071224] text-white rounded-3xl p-10 flex flex-col justify-between">
                 <div>
                   <div className="w-10 h-10 rounded-xl bg-white/10 text-blue-400 flex items-center justify-center mx-auto lg:mx-0"><Compass size={20} /></div>
-                  <h3 className="text-2xl font-black tracking-tight mt-6 text-center">Our Execution Mission</h3>
-                  <p className="text-sm text-white/70 leading-relaxed mt-3 text-center">To continuously transform real estate assets using rigorous industrial engineering principles, premium sourced compositions, and uncompromised craftsmanship metrics.</p>
+                  <h3 className="text-2xl font-black tracking-tight mt-6 text-center lg:text-left">Our Execution Mission</h3>
+                  <p className="text-sm text-white/70 leading-relaxed mt-3 text-center lg:text-left">To continuously transform real estate assets using rigorous industrial engineering principles, premium sourced compositions, and uncompromised craftsmanship metrics.</p>
                 </div>
               </motion.div>
 
@@ -601,16 +665,16 @@ export default function AboutPage() {
         </section>
 
         {/* TEAM SYNERGY BLOCK */}
-        <section className="py-28 bg-slate-50 border-t border-slate-200/50">
+        <section className="py-28 bg-slate-50 border-y border-slate-200/50">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid lg:grid-cols-12 gap-16 items-center">
               
               <motion.div {...smoothFadeUp} className="lg:col-span-7">
-                <div className="text-center space-y-4">
+                <div className="text-center lg:text-left space-y-4">
                   <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">Personnel Capital</span>
                   <h2 className="text-4xl font-black text-[#071224] tracking-tight leading-tight">A High-Performance Engineering Culture</h2>
                 </div>
-                <p className="mt-6 text-slate-600 text-base leading-relaxed text-center">
+                <p className="mt-6 text-slate-600 text-base leading-relaxed text-center lg:text-left">
                   Our internal design coordinators, production engineers, material technicians, and field installation supervisors share matching performance metrics. Every deployment sub-system operates under single point supervisor oversight to ensure perfect quality handovers.
                 </p>
               </motion.div>
@@ -631,7 +695,72 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* STYLISH PERSISTENT OUTBOUND PORTAL */}
+        {/* FREQUENTLY ASKED QUESTIONS */}
+        <section className="py-24 bg-white relative">
+          <div className="max-w-4xl mx-auto px-6 lg:px-8">
+            <div className="text-center space-y-4 mb-16">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">Knowledge Base</span>
+              <h2 className="text-4xl font-black text-[#071224] tracking-tight">Frequently Asked Questions</h2>
+            </div>
+            
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div 
+                  key={index} 
+                  className={`border ${openFaq === index ? "border-[#0A2E6F]/30 bg-blue-50/30" : "border-slate-200/70 bg-white"} rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#0A2E6F]/30 shadow-sm`}
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                  >
+                    <span className="font-bold text-[#071224] pr-4">{faq.q}</span>
+                    <ChevronDown size={20} className={`text-[#0A2E6F] shrink-0 transition-transform duration-300 ${openFaq === index ? "rotate-180" : ""}`} />
+                  </button>
+                  <div className={`px-6 overflow-hidden transition-all duration-300 ease-in-out ${openFaq === index ? "max-h-48 pb-6 opacity-100" : "max-h-0 opacity-0"}`}>
+                    <p className="text-sm text-slate-600 leading-relaxed font-medium">{faq.a}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CLIENT REVIEWS CONTINUOUS SCROLL */}
+        <section className="py-24 bg-[#FAFBFD] border-t border-slate-200/50">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="text-center max-w-xl mx-auto space-y-4">
+              <span className="text-xs font-bold uppercase tracking-widest text-[#0A2E6F]">Client Testimonials</span>
+              <h2 className="text-4xl font-black text-[#071224] tracking-tight">Trusted By Industry Leaders</h2>
+            </div>
+          </div>
+          
+          <div className="mt-16 relative w-full overflow-hidden">
+            {/* Gradient fades for the edges matching the section background */}
+            <div className="absolute top-0 bottom-0 left-0 w-24 md:w-48 bg-gradient-to-r from-[#FAFBFD] to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-24 md:w-48 bg-gradient-to-l from-[#FAFBFD] to-transparent z-10 pointer-events-none" />
+            
+            <div className="flex w-max gap-8 animate-marquee hover:[animation-play-state:paused] pl-8">
+              {infiniteReviews.map((item, i) => (
+                <div
+                  key={`${item.name}-${i}`}
+                  className="w-[320px] md:w-[420px] shrink-0 bg-white rounded-3xl p-8 shadow-[0_10px_30px_rgba(0,0,0,0.02)] border border-slate-200/60 relative overflow-hidden group hover:shadow-[0_20px_40px_rgba(10,46,111,0.06)] hover:border-[#0A2E6F]/20 transition-all duration-300"
+                >
+                  <Quote className="absolute top-6 right-6 text-slate-100 w-24 h-24 -z-0 rotate-12 transition-transform duration-500 group-hover:rotate-0 group-hover:text-blue-50" />
+                  <div className="relative z-10">
+                    <div className="text-amber-400 text-lg tracking-widest flex gap-1">★★★★★</div>
+                    <p className="mt-6 text-slate-700 leading-relaxed font-medium italic text-[15px]">"{item.review}"</p>
+                    <div className="mt-8 pt-6 border-t border-slate-100">
+                      <h4 className="font-bold text-[#071224]">{item.name}</h4>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mt-1">{item.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* STYLISH PERSISTENT OUTBOUND PORTAL (CTA) */}
         <section className="relative py-36 overflow-hidden bg-[#071224]">
           <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
           <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />

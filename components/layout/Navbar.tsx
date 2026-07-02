@@ -3,7 +3,30 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { X, ArrowRight, BookOpen, Download, CheckCircle2, User, Mail, Phone, DoorOpen, Layout, Construction, Layers, Eye, ArrowLeft, Loader2, Sparkles, FileText, ArrowUpRight, Folder, FolderOpen, ChevronRight, PhoneCall } from "lucide-react";
+import { usePathname } from "next/navigation"; 
+
+import { 
+  X, 
+  ArrowRight, 
+  Download, 
+  User, 
+  Mail, 
+  Phone, 
+  DoorOpen, 
+  Layout, 
+  Construction, 
+  Layers, 
+  Eye, 
+  ArrowLeft, 
+  Loader2, 
+  Sparkles, 
+  FileText, 
+  ArrowUpRight, 
+  Folder, 
+  FolderOpen, 
+  ChevronRight, 
+  PhoneCall 
+} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 // Clean unified navigation items matching your requested display order exactly
@@ -13,8 +36,10 @@ const menuItems = [
   { label: "Windows & Doors", href: "/windows-doors", isCatalog: false },
   { label: "Interiors", href: "/interiors", isCatalog: false },
   { label: "Renovation", href: "/renovation", isCatalog: false },
-  { label: "Catalogs", href: "#", isCatalog: true }, // Placed right here in sequence!
-  { label: "Contact", href: "/contact", isCatalog: false },
+  { label: "Metal Works", href: "/metal-works", isCatalog: false },
+  { label: "Catalogs", href: "#", isCatalog: true }, 
+  { label: "Articles", href: "/articles", isCatalog: false },
+  { label: "Contact", href: "/contact", isCatalog: false }
 ];
 
 const categoriesData = [
@@ -95,6 +120,7 @@ const categoriesData = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [catalogsOpen, setCatalogsOpen] = useState(false);
@@ -173,7 +199,7 @@ export default function Navbar() {
     } catch (error: any) {
       console.error(error);
       setSubmitError(error.message || "Connection timeout exception.");
-      setIsSubmitted(true); 
+      setIsSubmitted(false); // Make sure the user isn't allowed entry if the API fails
     } finally {
       setIsSubmitting(false);
     }
@@ -208,7 +234,7 @@ export default function Navbar() {
             
             {/* Logo Link Layout */}
             <Link href="/" className="flex items-center gap-3 group">
-              <Image src="/logo.png" alt="Simmply Perfect" width={55} height={55} priority className="h-[55px] w-auto object-contain transition-all duration-300 group-hover:scale-105" />
+              <Image src="/logo.png" alt="Simmply Perfect" width={55} height={55} priority className="h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105" />
               <div>
                 <h1 className="text-xl font-bold text-[#0A2E6F] leading-none tracking-wide">SIMMPLY PERFECT</h1>
                 <span className="text-[10px] tracking-[5px] text-slate-500">GROUP</span>
@@ -217,8 +243,10 @@ export default function Navbar() {
 
             {/* Desktop Navbar Menu Actions - Dynamically Injects trigger button in exact requested array order */}
             <nav className="hidden lg:flex items-center gap-10">
-              {menuItems.map((item) => 
-                item.isCatalog ? (
+              {menuItems.map((item) => {
+                const isActive = pathname === item.href && !item.isCatalog; // Check active route
+                
+                return item.isCatalog ? (
                   <button 
                     key={item.label}
                     onClick={() => setCatalogsOpen(true)} 
@@ -231,20 +259,18 @@ export default function Navbar() {
                   <Link 
                     key={item.label}
                     href={item.href} 
-                    className="relative text-[16px] font-medium text-slate-700 hover:text-[#0A2E6F] transition-all duration-300 group"
+                    className={`relative text-[16px] transition-all duration-300 group ${
+                      isActive ? "font-bold text-[#0A2E6F]" : "font-medium text-slate-700 hover:text-[#0A2E6F]"
+                    }`}
                   >
                     {item.label}
-                    <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#0A2E6F] transition-all duration-300 group-hover:w-full" />
+                    <span className={`absolute -bottom-2 left-0 h-[2px] bg-[#0A2E6F] transition-all duration-300 ${
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                    }`} />
                   </Link>
-                )
-              )}
+                );
+              })}
             </nav>
-
-            {/* Standalone CTA Button side block */}
-            <Link href="/contact" className="hidden lg:flex items-center justify-center bg-[#0A2E6F] text-white px-7 py-3 rounded-full text-sm font-medium hover:scale-105 hover:shadow-xl transition-all duration-300 shrink-0">
-              Get In Touch
-            </Link>
-
             {/* Mobile Hamburger System Button */}
             <motion.button whileTap={{ scale: 0.9 }} onClick={() => setMobileMenuOpen(true)} className="lg:hidden w-12 h-12 rounded-xl bg-white shadow-md border border-slate-200 flex items-center justify-center">
               <div className="flex flex-col gap-1.5">
@@ -267,7 +293,7 @@ export default function Navbar() {
               <div>
                 <div className="flex items-center justify-between mb-12">
                   <div className="flex items-center gap-3">
-                    <Image src="/logo.png" alt="Logo" width={40} height={40} className="w-auto h-[40px]" />
+                    <Image src="/logo.png" alt="Logo" width={40} height={40} className="w-auto h-12" />
                     <span className="font-bold text-[#0A2E6F]">SIMMPLY PERFECT</span>
                   </div>
                   <motion.button whileTap={{ scale: 0.9 }} whileHover={{ rotate: 90 }} onClick={() => setMobileMenuOpen(false)} className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
@@ -277,8 +303,10 @@ export default function Navbar() {
 
                 {/* Mobile List Navigation matching order logic perfectly */}
                 <div className="flex flex-col gap-5">
-                  {menuItems.map((item) => 
-                    item.isCatalog ? (
+                  {menuItems.map((item) => {
+                    const isActive = pathname === item.href && !item.isCatalog;
+
+                    return item.isCatalog ? (
                       <button 
                         key={item.label}
                         onClick={() => { setMobileMenuOpen(false); setCatalogsOpen(true); }} 
@@ -291,12 +319,14 @@ export default function Navbar() {
                         key={item.label}
                         href={item.href} 
                         onClick={() => setMobileMenuOpen(false)} 
-                        className="text-xl font-medium text-slate-700 hover:text-[#0A2E6F] transition-all"
+                        className={`text-xl transition-all ${
+                          isActive ? "font-bold text-[#0A2E6F]" : "font-medium text-slate-700 hover:text-[#0A2E6F]"
+                        }`}
                       >
                         {item.label}
                       </Link>
-                    )
-                  )}
+                    );
+                  })}
                 </div>
               </div>
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="mt-8 bg-[#0A2E6F] text-white py-4 rounded-2xl font-semibold text-center hover:shadow-lg transition-all duration-300">
@@ -311,7 +341,7 @@ export default function Navbar() {
       <AnimatePresence>
         {catalogsOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 md:p-8 lg:p-12 overflow-y-auto">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={handleCloseCatalogs} className="fixed inset-0 bg-slate-955/80 backdrop-blur-2xl z-0 bg-slate-950/80" />
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={handleCloseCatalogs} className="fixed inset-0 bg-slate-950/80 backdrop-blur-2xl z-0" />
 
             <motion.div
               initial={{ opacity: 0, scale: 0.98, y: 30 }}
@@ -505,7 +535,7 @@ export default function Navbar() {
                                 </button>
                               </div>
 
-                              {activeCategoryObject?.files.map((file, idx) => (
+                              {activeCategoryObject?.files?.map((file, idx) => (
                                 <motion.div key={idx} whileHover={{ scale: 1.002, x: 4 }} className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white rounded-2xl border border-slate-200/60 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300 gap-3">
                                   <div className="flex items-center gap-4 min-w-0">
                                     <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/60 text-slate-400 flex items-center justify-center shrink-0">
@@ -536,7 +566,7 @@ export default function Navbar() {
                       {/* COMPACT FLOATING BOTTOM FOOTER SUPPORT CTA BANNER */}
                       <div className="bg-gradient-to-r from-slate-900 to-[#0A2E6F] rounded-2xl p-4 md:p-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl shrink-0">
                         <div className="flex items-center gap-3.5 text-center sm:text-left">
-                          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/10 hidden sm:flex">
+                          <div className="w-10 h-10 rounded-xl bg-white/10 hidden sm:flex items-center justify-center shrink-0 border border-white/10">
                             <PhoneCall size={18} className="text-blue-300 animate-pulse" />
                           </div>
                           <div>

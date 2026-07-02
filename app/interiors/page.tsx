@@ -1,180 +1,199 @@
 "use client";
 import Footer from "@/components/home/Footer";
 import Navbar from "@/components/layout/Navbar";
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { ArrowRight, CheckCircle2, Quote, Plus } from "lucide-react";
 
 // --- ANIMATION VARIANTS ---
 const fadeUp = {
-
   initial: { opacity: 0, y: 40 },
-
   whileInView: { opacity: 1, y: 0 },
-
   viewport: { once: true, margin: "-100px" },
-
   transition: {
-
     duration: 0.7,
-
     ease: [0.22, 1, 0.36, 1] as const,
-
   },
-
 };
 
-import type { Transition } from "framer-motion";
-
 const fadeLeft = {
-
   initial: { opacity: 0, x: -60 },
-
   whileInView: { opacity: 1, x: 0 },
-
   viewport: { once: true, margin: "-100px" },
-
   transition: {
-
     duration: 0.7,
-
     ease: [0.22, 1, 0.36, 1] as const,
-
   },
-
 };
 
 const fadeRight = {
-
   initial: { opacity: 0, x: 60 },
-
   whileInView: { opacity: 1, x: 0 },
-
   viewport: { once: true, margin: "-100px" },
-
   transition: {
-
     duration: 0.7,
-
     ease: [0.22, 1, 0.36, 1] as const,
-
   },
-
 };
+
 // --- ENHANCED DATA FOR CARDS AND POPUPS ---
 const interiorServices = [
   {
     title: "Modular Kitchens",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1400",
+    image: "/interiors/modular-kitchen/cover.jpg",
     desc: "Elegant kitchen spaces designed for functionality, comfort and modern living.",
-    fullDesc: "Transform the heart of your home with our bespoke modular kitchens. We focus on ergonomic layouts, smart storage optimization, and premium finishes to create a space that is as beautiful as it is functional.",
+    fullDesc:
+      "Transform the heart of your home with our bespoke modular kitchens. We focus on ergonomic layouts, smart storage optimization, and premium finishes to create a space that is as beautiful as it is functional.",
     features: [
       "Custom Cabinetry & Storage",
       "Premium Quartz/Granite Countertops",
       "Soft-Close Hinges & Channels",
       "Built-In Appliance Integration",
       "Ambient & Task Lighting",
-      "Moisture-Resistant Materials"
+      "Moisture-Resistant Materials",
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=800",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=800",
-      "https://images.unsplash.com/photo-1565183997392-2f6f122e5912?q=80&w=800",
-      "https://images.unsplash.com/photo-1556912167-f556f1f39fdf?q=80&w=800"
-    ]
+      "/interiors/modular-kitchen/1.jpg",
+      "/interiors/modular-kitchen/2.jpg",
+      "/interiors/modular-kitchen/3.jpg",
+      "/interiors/modular-kitchen/4.jpg",
+    ],
   },
   {
     title: "Luxury Wardrobes",
-    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1400",
+    image: "/interiors/wardrobes/cover.jpg",
     desc: "Premium wardrobe solutions with smart storage and luxurious finishes.",
-    fullDesc: "Experience the luxury of perfectly organized spaces. Our custom wardrobes and walk-in closets are designed to maximize storage while adding a touch of elegance to your bedroom.",
+    fullDesc:
+      "Experience the luxury of perfectly organized spaces. Our custom wardrobes and walk-in closets are designed to maximize storage while adding a touch of elegance to your bedroom.",
     features: [
       "Walk-in Closet Designs",
       "Sliding & Hinged Doors",
       "Integrated Sensor Lighting",
       "Custom Drawer Compartments",
       "Premium Glass & Wood Finishes",
-      "Space Optimization"
+      "Space Optimization",
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1558997519-83ea9252edf8?q=80&w=800",
-      "https://images.unsplash.com/photo-1595428774223-ef52624120d2?q=80&w=800"
-    ]
+      "/interiors/wardrobes/1.jpg",
+      "/interiors/wardrobes/2.jpg",
+      "/interiors/wardrobes/3.jpg",
+      "/interiors/wardrobes/4.jpg",
+    ],
   },
   {
     title: "Living Room Designs",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1400",
+    // Random Unsplash image for cover visibility
+    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600",
     desc: "Beautiful living spaces tailored around your lifestyle and personality.",
-    fullDesc: "Your living room is the showcase of your home. We design captivating spaces that balance comfort, entertainment, and striking aesthetic appeal, perfectly tailored to your lifestyle.",
+    fullDesc:
+      "Your living room is the showcase of your home. We design captivating spaces that balance comfort, entertainment, and striking aesthetic appeal, perfectly tailored to your lifestyle.",
     features: [
       "Custom TV Units",
       "Designer Accent Walls",
       "Bespoke Furniture Selection",
       "Layered Lighting Solutions",
       "Curated Art & Decor",
-      "Acoustic Planning"
+      "Acoustic Planning",
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800",
-      "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=800"
-    ]
+      "/interiors/living-room/1.jpg",
+      "/interiors/living-room/2.jpg",
+      "/interiors/living-room/3.jpg",
+      "/interiors/living-room/4.jpg",
+    ],
   },
   {
     title: "False Ceilings",
-    image: "https://unsplash.com/photos/man-on-white-ladder-3coKbdfnAFg",
+    image: "/interiors/false-ceiling/cover.jpg",
     desc: "Modern ceiling concepts integrated with elegant lighting systems.",
-    fullDesc: "Elevate your interiors literally from the top down. Our modern false ceiling designs hide wiring, improve room acoustics, and provide the perfect canvas for stunning architectural lighting.",
+    fullDesc:
+      "Elevate your interiors literally from the top down. Our modern false ceiling designs hide wiring, improve room acoustics, and provide the perfect canvas for stunning architectural lighting.",
     features: [
       "Concealed Cove Lighting",
       "Gypsum & Plaster Designs",
       "Wooden Ceiling Planks",
       "Drop & Multi-level Ceilings",
       "Acoustic Insulation",
-      "Seamless Finish"
+      "Seamless Finish",
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800",
-      "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=800"
-    ]
+      "/interiors/false-ceiling/1.jpg",
+      "/interiors/false-ceiling/2.jpg",
+      "/interiors/false-ceiling/3.jpg",
+      "/interiors/false-ceiling/4.jpg",
+    ],
   },
   {
     title: "Bedroom Interiors",
-    image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=80&w=1400",
+    image: "/interiors/bedroom/cover.jpg",
     desc: "Luxury bedrooms designed for comfort, relaxation and sophistication.",
-    fullDesc: "Turn your bedroom into a personal sanctuary. We specialize in creating serene, luxurious, and highly comfortable bedroom environments that promote relaxation and peace.",
+    fullDesc:
+      "Turn your bedroom into a personal sanctuary. We specialize in creating serene, luxurious, and highly comfortable bedroom environments that promote relaxation and peace.",
     features: [
       "Custom Bed & Headboards",
       "Ambient Mood Lighting",
       "Premium Wall Textures",
       "Integrated Side Tables",
       "Luxury Window Treatments",
-      "Ergonomic Space Planning"
+      "Ergonomic Space Planning",
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1617806118233-18e1db207f62?q=80&w=800",
-      "https://images.unsplash.com/photo-1540518614846-7eded433c457?q=80&w=800"
-    ]
+      "/interiors/bedroom/1.jpg",
+      "/interiors/bedroom/2.jpg",
+      "/interiors/bedroom/3.jpg",
+      "/interiors/bedroom/4.jpg",
+    ],
   },
   {
     title: "Home Office Spaces",
-    image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1400",
+    image: "/interiors/home-office/cover.jpg",
     desc: "Productive and stylish workspaces designed for modern professionals.",
-    fullDesc: "Boost your productivity with a dedicated home office that blends seamlessly into your home. We design ergonomic, quiet, and inspiring workspaces tailored for focus.",
+    fullDesc:
+      "Boost your productivity with a dedicated home office that blends seamlessly into your home. We design ergonomic, quiet, and inspiring workspaces tailored for focus.",
     features: [
       "Ergonomic Custom Desks",
       "Built-in Bookshelves",
       "Optimal Task Lighting",
       "Hidden Cable Management",
       "Acoustic Wall Panels",
-      "Inspiring Color Palettes"
+      "Inspiring Color Palettes",
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800",
-      "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?q=80&w=800"
-    ]
+      "/interiors/home-office/1.jpg",
+      "/interiors/home-office/2.jpg",
+      "/interiors/home-office/3.jpg",
+      "/interiors/home-office/4.jpg",
+    ],
   },
 ];
+
+// --- EXTENDED FAQS ---
+const faqData = [
+  { q: "How long does a complete interior project take?", a: "Depending on the project scope, most interior projects take between 4 to 12 weeks from design approval to completion." },
+  { q: "Do you provide 3D designs before execution?", a: "Yes. We create detailed 3D visualizations to help you visualize the final outcome before work begins." },
+  { q: "Can I customize materials and finishes?", a: "Absolutely. We offer a wide range of laminates, veneers, finishes, colors and premium materials to match your style." },
+  { q: "Do you provide turnkey interior solutions?", a: "Yes. We handle everything from design and planning to execution, installation, and final styling." },
+  { q: "What is your payment structure?", a: "We follow a milestone-based payment structure. A booking amount starts the design process, followed by staged payments during execution." },
+  { q: "Can you work within my specific budget?", a: "Yes, we tailor our designs and material recommendations to align with your financial expectations without compromising quality." },
+  { q: "Do you offer any warranty on the interiors?", a: "We provide a comprehensive warranty on all our woodwork, hardware, and structural executions for up to 5-10 years depending on the materials chosen." },
+  { q: "Will you handle civil and structural changes?", a: "Yes, our turnkey services cover civil alterations, plumbing, electrical rerouting, and false ceilings as required by the new design." }
+];
+
+// --- EXTENDED REVIEWS FOR INFINITE SCROLL ---
+const reviewsData = [
+  { name: "Ravi Kumar", role: "Villa Owner", review: "The team transformed our house into a luxurious living space. Every detail was thoughtfully designed and executed." },
+  { name: "Anjali Sharma", role: "Homeowner", review: "From the modular kitchen to the bedroom interiors, everything exceeded our expectations in both quality and finish." },
+  { name: "Vikram Reddy", role: "Apartment Owner", review: "Professional, creative and highly reliable. The final result looked exactly like the 3D design we were promised." },
+  { name: "Priya Desai", role: "Penthouse Owner", review: "They perfectly captured the modern minimalist vibe I wanted. The space feels incredibly premium and airy." },
+  { name: "Rahul Mehta", role: "Homeowner", review: "On-time delivery and fantastic craftsmanship! The custom wardrobes and lighting setup completely elevated our home." },
+  { name: "Sneha Kapoor", role: "Duplex Owner", review: "Great attention to detail and excellent project management. We didn't have to worry about a thing during execution." },
+  { name: "Amit Singh", role: "Homeowner", review: "The 3D renders were exactly what was delivered. The finish on the modular kitchen is absolute perfection." },
+  { name: "Neha Joshi", role: "Villa Owner", review: "Highly recommend! They managed everything from civil work to final styling seamlessly and stress-free." },
+];
+// Double the array to create a seamless infinite loop
+const infiniteReviews = [...reviewsData, ...reviewsData];
+
 
 // --- REUSABLE DRAGGABLE CAROUSEL ---
 function DraggableCarousel({
@@ -292,6 +311,7 @@ function DraggableCarousel({
 // --- MAIN PAGE COMPONENT ---
 export default function InteriorsPage() {
   const [selectedService, setSelectedService] = useState<any>(null);
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
 
   useEffect(() => {
     requestAnimationFrame(() => {
@@ -301,7 +321,7 @@ export default function InteriorsPage() {
 
   useEffect(() => {
     const body = document.body;
-    if (selectedService) {
+    if (selectedService || fullscreenImage) {
       const scrollY = window.scrollY;
       body.dataset.scrollY = scrollY.toString();
       body.style.position = "fixed";
@@ -320,11 +340,25 @@ export default function InteriorsPage() {
       body.style.overflow = "";
       window.scrollTo({ top: scrollY, left: 0, behavior: "instant" });
     }
-  }, [selectedService]);
+  }, [selectedService, fullscreenImage]);
 
   return (
     <>
       <Navbar />
+
+      {/* Add global styles for the infinite marquee animation */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes scroll-marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-50% - 16px)); } /* 16px to offset half the 32px gap */
+        }
+        .animate-marquee {
+          animation: scroll-marquee 40s linear infinite;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      `}} />
 
       <main className="bg-white overflow-hidden selection:bg-[#0A2E6F] selection:text-white">
         
@@ -380,53 +414,22 @@ export default function InteriorsPage() {
               {/* FLOATING HERO GRAPHIC */}
               <motion.div {...fadeRight} className="relative mt-10 lg:mt-0">
                 <div className="relative h-[550px] lg:h-[650px] rounded-[2.5rem] overflow-hidden shadow-2xl">
+                  {/* Changed hero image to Unsplash so the main page image is visible */}
                   <motion.img
-                    animate={{ 
+                    src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1600"
+                    alt="Luxury Interior Design"
+                    className="w-full h-full object-cover"
+                    animate={{
                       scale: [1, 1.03, 1],
                       y: [0, -10, 0]
                     }}
-                    transition={{ 
-                      duration: 8, 
-                      repeat: Infinity, 
-                      ease: "easeInOut" 
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut"
                     }}
-                    src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000"
-                    alt="Luxury Living Room Showcase"
-                    className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    className="absolute top-8 left-8 bg-white/80 backdrop-blur-xl border border-white/40 rounded-2xl px-5 py-3 shadow-lg"
-                  >
-                    <p className="text-[10px] font-bold text-[#0A2E6F] uppercase tracking-wider">Step 01</p>
-                    <h4 className="text-sm font-bold text-[#071224] mt-0.5">Premium Design</h4>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.9, duration: 0.6 }}
-                    className="absolute right-8 top-32 bg-white/80 backdrop-blur-xl border border-white/40 rounded-2xl px-5 py-3 shadow-lg"
-                  >
-                    <p className="text-[10px] font-bold text-[#0A2E6F] uppercase tracking-wider">Step 02</p>
-                    <h4 className="text-sm font-bold text-[#071224] mt-0.5">Space Planning</h4>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 1.5, type: "spring", stiffness: 120 }}
-                    className="absolute right-8 bottom-8 bg-[#0A2E6F]/90 backdrop-blur-md border border-[#0A2E6F] text-white rounded-3xl p-5 shadow-2xl"
-                  >
-                    <p className="text-white/70 text-xs font-semibold uppercase tracking-wider">Project Status</p>
-                    <h3 className="text-xl font-black mt-1 flex items-center gap-2">
-                      Handover Ready <CheckCircle2 size={20} className="text-cyan-400" />
-                    </h3>
-                  </motion.div>
                 </div>
               </motion.div>
             </div>
@@ -449,7 +452,7 @@ export default function InteriorsPage() {
             </motion.div>
           </div>
 
-          {/* CAROUSEL CONTEXT - FADING END OVERLAYS REMOVED AS REQUESTED */}
+          {/* CAROUSEL CONTEXT */}
           <div className="mt-16 overflow-hidden relative">
             <DraggableCarousel items={interiorServices} onItemClick={setSelectedService} />
           </div>
@@ -459,7 +462,10 @@ export default function InteriorsPage() {
         {selectedService && (
           <div
             className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
-            onClick={() => setSelectedService(null)}
+            onClick={() => {
+              setSelectedService(null);
+              setFullscreenImage(null);
+            }}
           >
             <div
               onClick={(e) => e.stopPropagation()}
@@ -467,7 +473,10 @@ export default function InteriorsPage() {
             >
               {/* Close Button */}
               <button
-                onClick={() => setSelectedService(null)}
+                onClick={() => {
+                  setSelectedService(null);
+                  setFullscreenImage(null);
+                }}
                 className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white border border-slate-200 text-slate-500 hover:bg-slate-100 hover:text-slate-800 flex items-center justify-center text-lg z-20 transition-colors shadow-sm"
                 aria-label="Close"
               >
@@ -475,18 +484,26 @@ export default function InteriorsPage() {
               </button>
 
               <div className="overflow-y-auto w-full">
-                {/* HERO */}
-                <div className="relative h-[240px] shrink-0">
+                {/* HERO - Clickable for Fullscreen */}
+                <div 
+                  className="relative h-[240px] shrink-0 cursor-pointer group"
+                  onClick={() => setFullscreenImage(selectedService.image)}
+                  title="Click to view full image"
+                >
                   <img
                     src={selectedService.image}
                     alt={selectedService.title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute bottom-5 left-5 md:bottom-6 md:left-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-5 left-5 md:bottom-6 md:left-6 pointer-events-none">
                     <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
                       {selectedService.title}
                     </h2>
+                  </div>
+                  {/* Subtle expand icon overlay */}
+                  <div className="absolute top-4 left-4 bg-black/30 backdrop-blur-md p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Plus className="text-white w-5 h-5" />
                   </div>
                 </div>
 
@@ -512,18 +529,25 @@ export default function InteriorsPage() {
                     </div>
                   </div>
 
-                  {/* GALLERY */}
+                  {/* GALLERY - Images are clickable */}
                   {selectedService.gallery && selectedService.gallery.length > 0 && (
                     <div className="mt-8">
                       <h3 className="text-lg font-bold text-[#0A2E6F] mb-4">Design Inspiration</h3>
                       <div className="grid grid-cols-2 gap-3">
                         {selectedService.gallery.map((img: string, i: number) => (
-                          <div key={i} className="rounded-xl overflow-hidden border border-slate-200 group">
+                          <div 
+                            key={i} 
+                            className="rounded-xl overflow-hidden border border-slate-200 group cursor-pointer relative"
+                            onClick={() => setFullscreenImage(img)}
+                          >
                             <img
                               src={img}
                               alt={`${selectedService.title} Idea ${i + 1}`}
                               className="w-full h-32 md:h-40 object-cover group-hover:scale-105 transition-transform duration-500"
                             />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                                <Plus className="text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md w-8 h-8" />
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -539,7 +563,10 @@ export default function InteriorsPage() {
                       Contact Us
                     </Link>
                     <button
-                      onClick={() => setSelectedService(null)}
+                      onClick={() => {
+                        setSelectedService(null);
+                        setFullscreenImage(null);
+                      }}
                       className="flex-1 border border-slate-300 hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-xl font-semibold text-sm transition-colors"
                     >
                       Close Details
@@ -548,6 +575,33 @@ export default function InteriorsPage() {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* FULLSCREEN IMAGE LIGHTBOX */}
+        {fullscreenImage && (
+          <div
+            className="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out"
+            onClick={() => setFullscreenImage(null)}
+          >
+            {/* Close Button for Lightbox */}
+            <button
+              onClick={() => setFullscreenImage(null)}
+              className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center text-xl z-50 transition-colors cursor-pointer"
+              aria-label="Close fullscreen"
+            >
+              ✕
+            </button>
+            <motion.img
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              src={fullscreenImage}
+              alt="Fullscreen View"
+              className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl cursor-default"
+              onClick={(e) => e.stopPropagation()} // Prevent clicking the image from closing it immediately
+            />
           </div>
         )}
 
@@ -769,8 +823,7 @@ export default function InteriorsPage() {
                   viewport={{ once: true }}
                   className="overflow-hidden rounded-[2rem] group relative"
                 >
-                  {/* FIXED EMPTY IMAGE - FILLED WITH A LUXURY DINING ROOM SCENE */}
-                  <img src="https://images.unsplash.com/photo-1617806118233-18e1db207f62?q=80&w=1400" alt="Featured Luxury Dining Space" className="w-full h-[250px] lg:h-[313px] object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <img src="/interiors/dining.jpg" alt="Featured Luxury Dining Space" className="w-full h-[250px] lg:h-[313px] object-cover transition-transform duration-700 group-hover:scale-105" />
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -786,8 +839,40 @@ export default function InteriorsPage() {
           </div>
         </section>
 
-        {/* TESTIMONIALS */}
+        {/* FAQ - Moved before Testimonials */}
         <section className="py-24 lg:py-32 bg-slate-50">
+          <div className="max-w-6xl mx-auto px-6">
+            <motion.div {...fadeUp} className="text-center">
+              <span className="uppercase tracking-[3px] text-sm font-semibold text-[#0A2E6F]">
+                Frequently Asked Questions
+              </span>
+              <h2 className="mt-4 text-4xl md:text-5xl font-black tracking-tight text-[#071224]">
+                Everything You Need To Know
+              </h2>
+            </motion.div>
+            <div className="mt-16 grid md:grid-cols-2 gap-4">
+              {faqData.map((faq, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  viewport={{ once: true }}
+                  className="group bg-white rounded-2xl p-6 md:p-8 hover:bg-blue-50/50 transition-colors border border-transparent hover:border-blue-100 shadow-sm"
+                >
+                  <div className="flex justify-between items-start gap-4">
+                    <h3 className="text-lg font-bold text-[#071224] leading-snug">{faq.q}</h3>
+                    <div className="bg-slate-50 rounded-full p-1.5 shrink-0 text-slate-400 group-hover:text-[#0A2E6F] shadow-sm"><Plus size={18} /></div>
+                  </div>
+                  <p className="mt-3 text-slate-600 leading-relaxed text-sm md:text-base pr-8">{faq.a}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* TESTIMONIALS - Infinite Marquee */}
+        <section className="py-24 lg:py-32 bg-white overflow-hidden">
           <div className="max-w-7xl mx-auto px-6">
             <motion.div {...fadeUp} className="text-center">
               <span className="uppercase tracking-[3px] text-sm font-semibold text-[#0A2E6F]">
@@ -797,74 +882,36 @@ export default function InteriorsPage() {
                 Spaces Our Clients Love
               </h2>
             </motion.div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-              {[
-                { name: "Ravi Kumar", role: "Villa Owner", review: "The team transformed our house into a luxurious living space. Every detail was thoughtfully designed and executed." },
-                { name: "Anjali Sharma", role: "Homeowner", review: "From the modular kitchen to the bedroom interiors, everything exceeded our expectations in both quality and finish." },
-                { name: "Vikram Reddy", role: "Apartment Owner", review: "Professional, creative and highly reliable. The final result looked exactly like the 3D design we were promised." },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+          </div>
+          
+          <div className="mt-16 relative w-full overflow-hidden">
+            {/* Gradient fades for the edges */}
+            <div className="absolute top-0 bottom-0 left-0 w-24 md:w-48 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-24 md:w-48 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+            
+            <div className="flex w-max gap-8 animate-marquee pl-8">
+              {infiniteReviews.map((item, i) => (
+                <div
+                  key={`${item.name}-${i}`}
+                  className="w-[320px] md:w-[420px] shrink-0 bg-slate-50 rounded-3xl p-8 shadow-sm border border-slate-100 relative overflow-hidden group hover:shadow-xl transition-all duration-300"
                 >
-                  <Quote className="absolute top-6 right-6 text-slate-50 w-24 h-24 -z-0 rotate-12 transition-transform duration-500 group-hover:rotate-0 group-hover:text-blue-50/50" />
+                  <Quote className="absolute top-6 right-6 text-white w-24 h-24 -z-0 rotate-12 transition-transform duration-500 group-hover:rotate-0 group-hover:text-blue-100/50" />
                   <div className="relative z-10">
                     <div className="text-amber-400 text-lg tracking-widest flex gap-1">★★★★★</div>
                     <p className="mt-6 text-slate-700 leading-relaxed font-medium italic text-[15px]">"{item.review}"</p>
-                    <div className="mt-8 pt-6 border-t border-slate-100">
+                    <div className="mt-8 pt-6 border-t border-slate-200">
                       <h4 className="font-bold text-[#071224]">{item.name}</h4>
                       <p className="text-sm text-slate-500">{item.role}</p>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="py-24 lg:py-32 bg-white">
-          <div className="max-w-4xl mx-auto px-6">
-            <motion.div {...fadeUp} className="text-center">
-              <span className="uppercase tracking-[3px] text-sm font-semibold text-[#0A2E6F]">
-                Frequently Asked Questions
-              </span>
-              <h2 className="mt-4 text-4xl md:text-5xl font-black tracking-tight text-[#071224]">
-                Everything You Need To Know
-              </h2>
-            </motion.div>
-            <div className="mt-16 space-y-4">
-              {[
-                { q: "How long does a complete interior project take?", a: "Depending on the project scope, most interior projects take between 4 to 12 weeks from design approval to completion." },
-                { q: "Do you provide 3D designs before execution?", a: "Yes. We create detailed 3D visualizations to help you visualize the final outcome before work begins." },
-                { q: "Can I customize materials and finishes?", a: "Absolutely. We offer a wide range of laminates, veneers, finishes, colors and premium materials to match your style." },
-                { q: "Do you provide turnkey interior solutions?", a: "Yes. We handle everything from design and planning to execution, installation, and final styling." },
-              ].map((faq, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  viewport={{ once: true }}
-                  className="group bg-slate-50 rounded-2xl p-6 md:p-8 hover:bg-blue-50/50 transition-colors border border-transparent hover:border-blue-100"
-                >
-                  <div className="flex justify-between items-start gap-4">
-                    <h3 className="text-lg font-bold text-[#071224] leading-snug">{faq.q}</h3>
-                    <div className="bg-white rounded-full p-1.5 shrink-0 text-slate-400 group-hover:text-[#0A2E6F] shadow-sm"><Plus size={18} /></div>
-                  </div>
-                  <p className="mt-3 text-slate-600 leading-relaxed text-sm md:text-base pr-8">{faq.a}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
         {/* COMPACT CTA SECTION */}
-        <section className="py-20 relative overflow-hidden bg-white">
+        <section className="py-20 relative overflow-hidden bg-slate-50">
           <div className="absolute top-0 left-0 w-[350px] h-[350px] bg-blue-500/10 blur-[150px] pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-[350px] h-[350px] bg-cyan-500/10 blur-[150px] pointer-events-none" />
           
@@ -892,7 +939,7 @@ export default function InteriorsPage() {
                     href="/contact"
                     className="bg-white text-[#071224] px-8 py-3.5 rounded-full font-bold transition-all duration-300 hover:scale-105 shadow-xl shadow-black/20"
                   >
-                    Get Free Consultation
+                    Get Consultation
                   </Link>
                   <a
                     href="tel:+919999999999"
@@ -907,7 +954,6 @@ export default function InteriorsPage() {
         </section>
 
       </main>
-
       <Footer />
     </>
   );

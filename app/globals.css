@@ -824,3 +824,39 @@ select:focus {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #16408d;
 }
+
+
+
+@keyframes marquee {
+
+  from {
+
+    transform: translateX(0);
+
+  }
+
+  to {
+
+    transform: translateX(-50%);
+
+  }
+
+}
+
+.marquee {
+
+  display: flex;
+
+  width: max-content;
+
+  animation: marquee 70s linear infinite;
+
+}
+
+.marquee:hover {
+
+  animation-play-state: paused;
+
+}
+
+
