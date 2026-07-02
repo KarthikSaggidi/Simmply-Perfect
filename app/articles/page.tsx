@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/home/Footer";
-import { Star } from "lucide-react";
 import { motion, AnimatePresence, type Transition } from "framer-motion";
 import { 
+  Star,
   ArrowRight, 
   Calendar, 
   Clock3,  
@@ -15,11 +15,27 @@ import {
   Building2, 
   X, 
   ShieldCheck,
-  BookOpen,  
   HelpCircle,
   ArrowUpRight,
   PhoneCall
 } from "lucide-react";
+
+/* ------------------------------------------------ */
+/* TYPES & INTERFACES */
+/* ------------------------------------------------ */
+
+interface Article {
+  title: string;
+  category: string;
+  image: string;
+  date: string;
+  summary: string;
+  fullScope?: string[];
+  time?: string;
+  readTime?: string;
+  excerpt?: string;
+  description?: string;
+}
 
 /* ------------------------------------------------ */
 /* MOTION ANIMATION DEFINITIONS */
@@ -57,7 +73,7 @@ const cardAnimation = {
 /* DATA SOURCES */
 /* ------------------------------------------------ */
 
-const featuredArticle = {
+const featuredArticle: Article = {
   title: "The Architecture of Light: Managing Thermal Break Profiles in Luxury Glazing",
   description: "An in-depth technical analysis on how premium multi-sliding insulated uPVC systems and structural aluminum glazing protect architectural configurations from heavy windloads, moisture bleeding, and acoustic degradation.",
   image: "/services/featured-glazing.jpg",
@@ -77,7 +93,7 @@ const featuredArticle = {
   ]
 };
 
-const articlesData = [
+const articlesData: Article[] = [
   {
     title: "Thermal Efficiency Thresholds in Modern uPVC Profiling",
     category: "Windows & Doors",
@@ -232,91 +248,27 @@ const faqsData = [
 ];
 
 const reviews = [
-  {
-    name: "Rajesh Kumar",
-    role: "Villa Owner",
-    text: "Outstanding workmanship. The windows completely transformed our home and the installation was flawless."
-  },
-  {
-    name: "Anjali Sharma",
-    role: "Interior Designer",
-    text: "Excellent quality, timely delivery and an extremely professional team."
-  },
-  {
-    name: "Vivek Reddy",
-    role: "Architect",
-    text: "The aluminium systems are premium quality. Highly recommended for luxury residences."
-  },
-  {
-    name: "Suresh Patel",
-    role: "Business Owner",
-    text: "Fantastic renovation work. Everything was completed exactly as promised."
-  },
-  {
-    name: "Kiran Rao",
-    role: "Apartment Owner",
-    text: "Very happy with the mosquito mesh systems. Smooth operation and premium finish."
-  },
-  {
-    name: "Rahul Verma",
-    role: "Builder",
-    text: "Professional execution with exceptional attention to detail."
-  },
-  {
-    name: "Sneha Gupta",
-    role: "Homeowner",
-    text: "Beautiful interiors and excellent customer support throughout the project."
-  },
-  {
-    name: "Ashok Reddy",
-    role: "Commercial Client",
-    text: "Their team handled our office renovation with outstanding quality."
-  },
-  {
-    name: "Manoj Singh",
-    role: "Property Developer",
-    text: "Reliable company with excellent engineering standards."
-  },
-  {
-    name: "Priya Nair",
-    role: "Architect",
-    text: "Their custom fabrication quality exceeded all expectations."
-  },
-  {
-    name: "Deepak Kumar",
-    role: "Villa Owner",
-    text: "Premium products, premium installation and excellent finishing."
-  },
-  {
-    name: "Harsha Vardhan",
-    role: "Engineer",
-    text: "One of the best teams we've worked with for glazing systems."
-  },
-  {
-    name: "Arjun Mehta",
-    role: "Luxury Homeowner",
-    text: "Everything from consultation to delivery was handled professionally."
-  },
-  {
-    name: "Lakshmi Devi",
-    role: "Interior Client",
-    text: "Our modular kitchen looks stunning. Highly recommended."
-  },
-  {
-    name: "Naveen Kumar",
-    role: "Contractor",
-    text: "Excellent fabrication quality and on-time project completion."
-  },
-  {
-    name: "Meghana Rao",
-    role: "Homeowner",
-    text: "Very responsive team with beautiful design execution."
-  }
+  { name: "Rajesh Kumar", role: "Villa Owner", text: "Outstanding workmanship. The windows completely transformed our home and the installation was flawless." },
+  { name: "Anjali Sharma", role: "Interior Designer", text: "Excellent quality, timely delivery and an extremely professional team." },
+  { name: "Vivek Reddy", role: "Architect", text: "The aluminium systems are premium quality. Highly recommended for luxury residences." },
+  { name: "Suresh Patel", role: "Business Owner", text: "Fantastic renovation work. Everything was completed exactly as promised." },
+  { name: "Kiran Rao", role: "Apartment Owner", text: "Very happy with the mosquito mesh systems. Smooth operation and premium finish." },
+  { name: "Rahul Verma", role: "Builder", text: "Professional execution with exceptional attention to detail." },
+  { name: "Sneha Gupta", role: "Homeowner", text: "Beautiful interiors and excellent customer support throughout the project." },
+  { name: "Ashok Reddy", role: "Commercial Client", text: "Their team handled our office renovation with outstanding quality." },
+  { name: "Manoj Singh", role: "Property Developer", text: "Reliable company with excellent engineering standards." },
+  { name: "Priya Nair", role: "Architect", text: "Their custom fabrication quality exceeded all expectations." },
+  { name: "Deepak Kumar", role: "Villa Owner", text: "Premium products, premium installation and excellent finishing." },
+  { name: "Harsha Vardhan", role: "Engineer", text: "One of the best teams we've worked with for glazing systems." },
+  { name: "Arjun Mehta", role: "Luxury Homeowner", text: "Everything from consultation to delivery was handled professionally." },
+  { name: "Lakshmi Devi", role: "Interior Client", text: "Our modular kitchen looks stunning. Highly recommended." },
+  { name: "Naveen Kumar", role: "Contractor", text: "Excellent fabrication quality and on-time project completion." },
+  { name: "Meghana Rao", role: "Homeowner", text: "Very responsive team with beautiful design execution." }
 ];
 
 export default function ArticlesPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
-  const [selectedArticle, setSelectedArticle] = useState<typeof articlesData[0] | typeof featuredArticle | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
   useEffect(() => {
     if (selectedArticle) {
@@ -633,352 +585,141 @@ export default function ArticlesPage() {
         </section>
 
         {/* PREMIUM INFINITE REVIEWS */}
-
-<section className="py-24 bg-gradient-to-b from-white to-slate-50 overflow-hidden">
-
-  <div className="max-w-7xl mx-auto px-6 text-center mb-16">
-
-    <span className="text-xs font-black uppercase tracking-[0.35em] text-[#0A2E6F]">
-
-      CUSTOMER REVIEWS
-
-    </span>
-
-    <h2 className="mt-3 text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
-
-      Trusted By Thousands
-
-    </h2>
-
-    <p className="mt-5 max-w-2xl mx-auto text-slate-500 leading-relaxed">
-
-      Every project reflects our commitment to quality, precision,
-
-      craftsmanship and customer satisfaction.
-
-    </p>
-
-  </div>
-
-  <div className="relative">
-
-    {/* Left Fade */}
-
-    <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#FAFBFD] via-[#FAFBFD] to-transparent z-20 pointer-events-none" />
-
-    {/* Right Fade */}
-
-    <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#FAFBFD] via-[#FAFBFD] to-transparent z-20 pointer-events-none" />
-
-    <motion.div
-
-      className="flex gap-5 w-max"
-
-      animate={{
-
-        x: ["0%", "-50%"],
-
-      }}
-
-      transition={{
-
-        duration: 55,
-
-        repeat: Infinity,
-
-        ease: "linear",
-
-      }}
-
-    >
-
-      {[...reviews, ...reviews].map((review, index) => (
-
-        <motion.div
-
-          key={index}
-
-          whileHover={{
-
-            y: -6,
-
-            scale: 1.03,
-
-          }}
-
-          transition={{
-
-            duration: 0.25,
-
-          }}
-
-          className="
-
-            w-[300px]
-
-            h-[235px]
-
-            shrink-0
-
-            rounded-3xl
-
-            bg-white
-
-            border
-
-            border-slate-200
-
-            p-6
-
-            shadow-sm
-
-            hover:shadow-xl
-
-            transition-all
-
-            duration-300
-
-            flex
-
-            flex-col
-
-            justify-between
-
-          "
-
-        >
-
-          {/* Stars */}
-
-          <div className="flex items-center gap-1 text-amber-400">
-
-            {Array.from({ length: 5 }).map((_, i) => (
-
-              <Star
-
-                key={i}
-
-                size={14}
-
-                fill="currentColor"
-
-              />
-
-            ))}
-
+        <section className="py-24 bg-gradient-to-b from-white to-slate-50 overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 text-center mb-16">
+            <span className="text-xs font-black uppercase tracking-[0.35em] text-[#0A2E6F]">
+              CUSTOMER REVIEWS
+            </span>
+            <h2 className="mt-3 text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+              Trusted By Thousands
+            </h2>
+            <p className="mt-5 max-w-2xl mx-auto text-slate-500 leading-relaxed">
+              Every project reflects our commitment to quality, precision,
+              craftsmanship and customer satisfaction.
+            </p>
           </div>
 
-          {/* Review */}
+          <div className="relative">
+            {/* Left Fade */}
+            <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#FAFBFD] via-[#FAFBFD] to-transparent z-20 pointer-events-none" />
+            
+            {/* Right Fade */}
+            <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#FAFBFD] via-[#FAFBFD] to-transparent z-20 pointer-events-none" />
 
-          <p className="text-sm leading-6 text-slate-600 italic line-clamp-4">
-
-            "{review.text}"
-
-          </p>
-
-          {/* Customer */}
-
-          <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
-
-            <div
-
-              className="
-
-                w-12
-
-                h-12
-
-                rounded-full
-
-                bg-gradient-to-br
-
-                from-[#0A2E6F]
-
-                to-blue-500
-
-                text-white
-
-                flex
-
-                items-center
-
-                justify-center
-
-                font-black
-
-                text-base
-
-                shrink-0
-
-              "
-
+            <motion.div
+              className="flex gap-5 w-max"
+              animate={{
+                x: ["0%", "-50%"],
+              }}
+              transition={{
+                duration: 55,
+                repeat: Infinity,
+                ease: "linear",
+              }}
             >
+              {[...reviews, ...reviews].map((review, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{
+                    y: -6,
+                    scale: 1.03,
+                  }}
+                  transition={{
+                    duration: 0.25,
+                  }}
+                  className="w-[300px] h-[235px] shrink-0 rounded-3xl bg-white border border-slate-200 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                >
+                  {/* Stars */}
+                  <div className="flex items-center gap-1 text-amber-400">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} size={14} fill="currentColor" />
+                    ))}
+                  </div>
 
-              {review.name.charAt(0)}
+                  {/* Review */}
+                  <p className="text-sm leading-6 text-slate-600 italic line-clamp-4">
+                    &quot;{review.text}&quot;
+                  </p>
 
-            </div>
-
-            <div className="flex-1 min-w-0">
-
-              <h4 className="font-bold text-sm text-slate-900 truncate">
-
-                {review.name}
-
-              </h4>
-
-              <p className="text-xs text-slate-500 truncate">
-
-                {review.role}
-
-              </p>
-
-              <span
-
-                className="
-
-                  inline-flex
-
-                  items-center
-
-                  mt-2
-
-                  rounded-full
-
-                  bg-green-50
-
-                  px-2.5
-
-                  py-1
-
-                  text-[10px]
-
-                  font-bold
-
-                  text-green-700
-
-                "
-
-              >
-
-                ✓ Verified Customer
-
-              </span>
-
-            </div>
-
+                  {/* Customer */}
+                  <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#0A2E6F] to-blue-500 text-white flex items-center justify-center font-black text-base shrink-0">
+                      {review.name.charAt(0)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-sm text-slate-900 truncate">
+                        {review.name}
+                      </h4>
+                      <p className="text-xs text-slate-500 truncate">
+                        {review.role}
+                      </p>
+                      <span className="inline-flex items-center mt-2 rounded-full bg-green-50 px-2.5 py-1 text-[10px] font-bold text-green-700">
+                        ✓ Verified Customer
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
-
-        </motion.div>
-
-      ))}
-
-    </motion.div>
-
-  </div>
-
-</section>
+        </section>
 
         {/* COMPACT PREMIUM CTA */}
-
-<section className="py-20 bg-white">
-
-  <div className="max-w-6xl mx-auto px-6 lg:px-8">
-
-    <motion.div
-
-      {...smoothFadeUp}
-
-      className="relative overflow-hidden rounded-[32px] bg-gradient-to-r from-[#071224] via-[#0A2E6F] to-[#123C8F] px-8 py-10 md:px-14 md:py-12"
-
-    >
-
-      {/* Background Accent */}
-
-      <div className="absolute -top-20 -right-20 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-
-      <div className="absolute -bottom-16 -left-16 h-44 w-44 rounded-full bg-blue-400/20 blur-3xl" />
-
-      <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10">
-
-        {/* Left Content */}
-
-        <div className="max-w-2xl">
-
-          <span className="inline-flex items-center gap-2 text-blue-200 text-xs font-bold uppercase tracking-[0.25em]">
-
-            <Sparkles size={13} />
-
-            Expert Consultation
-
-          </span>
-
-          <h2 className="mt-4 text-3xl md:text-4xl font-black leading-tight text-white">
-
-            Let's Build Your
-
-            <span className="block text-blue-200">
-
-              Perfect Space.
-
-            </span>
-
-          </h2>
-
-          <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-300">
-
-            Planning a new home, premium interiors, uPVC windows & doors,
-
-            or a complete renovation? Our specialists are ready to guide
-
-            you with the right solutions.
-
-          </p>
-
-        </div>
-
-        {/* Right Button */}
-
-        <motion.div
-
-          whileHover={{ scale: 1.04 }}
-
-          whileTap={{ scale: 0.98 }}
-
-        >
-
-          <Link
-
-            href="/contact"
-
-            className="group inline-flex items-center gap-3 rounded-2xl bg-white px-7 py-4 text-sm font-bold uppercase tracking-wider text-[#071224] shadow-xl transition-all hover:bg-slate-100"
-
-          >
-
-            Contact for Consultation
-
-            <ArrowRight
-
-              size={18}
-
-              className="transition-transform duration-300 group-hover:translate-x-1"
-
-            />
-
-          </Link>
-
-        </motion.div>
-
-      </div>
-
-    </motion.div>
-
-  </div>
-
-</section>
-<Footer />
+        <section className="py-20 bg-white">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <motion.div
+              {...smoothFadeUp}
+              className="relative overflow-hidden rounded-[32px] bg-gradient-to-r from-[#071224] via-[#0A2E6F] to-[#123C8F] px-8 py-10 md:px-14 md:py-12"
+            >
+              {/* Background Accent */}
+              <div className="absolute -top-20 -right-20 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+              <div className="absolute -bottom-16 -left-16 h-44 w-44 rounded-full bg-blue-400/20 blur-3xl" />
+              
+              <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10">
+                {/* Left Content */}
+                <div className="max-w-2xl">
+                  <span className="inline-flex items-center gap-2 text-blue-200 text-xs font-bold uppercase tracking-[0.25em]">
+                    <Sparkles size={13} />
+                    Expert Consultation
+                  </span>
+                  <h2 className="mt-4 text-3xl md:text-4xl font-black leading-tight text-white">
+                    Let&apos;s Build Your
+                    <span className="block text-blue-200">
+                      Perfect Space.
+                    </span>
+                  </h2>
+                  <p className="mt-4 text-sm md:text-base leading-relaxed text-slate-300">
+                    Planning a new home, premium interiors, uPVC windows & doors,
+                    or a complete renovation? Our specialists are ready to guide
+                    you with the right solutions.
+                  </p>
+                </div>
+                
+                {/* Right Button */}
+                <motion.div
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Link
+                    href="/contact"
+                    className="group inline-flex items-center gap-3 rounded-2xl bg-white px-7 py-4 text-sm font-bold uppercase tracking-wider text-[#071224] shadow-xl transition-all hover:bg-slate-100"
+                  >
+                    Contact for Consultation
+                    <ArrowRight
+                      size={18}
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    />
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+        
+        <Footer />
       </main>
 
-      {/* DYNAMIC POPUP MODAL ARCHITECTURE MODULE (DENSE DATA LOOKUP - NO OVERFLOW SCROLLBARS) */}
+      {/* DYNAMIC POPUP MODAL ARCHITECTURE MODULE */}
       <AnimatePresence>
         {selectedArticle && (
           <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6 md:p-10 overflow-hidden">
@@ -1018,7 +759,7 @@ export default function ArticlesPage() {
                   <span className="text-[9px] font-black uppercase tracking-widest text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2 py-1 rounded w-max block">{selectedArticle.category}</span>
                   <div className="flex gap-4 text-[11px] text-slate-300 font-bold pt-1">
                     <span className="flex items-center gap-1"><Calendar size={13} /> {selectedArticle.date}</span>
-                    <span className="flex items-center gap-1"><Clock3 size={13} /> {'time' in selectedArticle ? selectedArticle.time : selectedArticle.readTime}</span>
+                    <span className="flex items-center gap-1"><Clock3 size={13} /> {selectedArticle.time || selectedArticle.readTime}</span>
                   </div>
                 </div>
               </div>
@@ -1043,7 +784,7 @@ export default function ArticlesPage() {
                   <div className="space-y-3 border-l-2 border-[#0A2E6F]/20 pl-4 py-1">
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block">Executive Abstract</span>
                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-light">
-                      {'summary' in selectedArticle ? selectedArticle.summary : selectedArticle.description}
+                      {selectedArticle.summary || selectedArticle.description}
                     </p>
                   </div>
 
