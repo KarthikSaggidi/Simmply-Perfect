@@ -61,14 +61,11 @@ const cardAnimation = {
 };
 
 const floatAnimation = {
-  animate: {
-    y: [0, -10, 0],
-  },
   transition: {
-    duration: 6,
+    duration: 2,
     repeat: Infinity,
-    ease: "easeInOut",
-  },
+    ease: "linear" as const // This fixes the TypeScript error
+  }
 };
 
 /* ------------------------------------------------ */
@@ -311,8 +308,9 @@ export default function MetalWorksPage() {
                 
                 <motion.div {...floatAnimation} className="relative h-full">
                   <img
-                    src="/metalworks/iron-gates.jpg"
-                    alt="Premium Metal Works and Iron Gates Fabrication"
+                
+  src="/metalworks/iron-gates.jpg" 
+  alt="Premium Metal Works and Iron Gates Fabrication" 
                     className="relative rounded-[40px] h-full w-full object-cover border border-white/50 shadow-[0_40px_100px_rgba(0,0,0,0.1)] z-10 cursor-zoom-in"
                     onClick={() => setSelectedImage("/metalworks/iron-gates.jpg")}
                     decoding="async"
